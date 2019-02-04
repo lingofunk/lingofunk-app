@@ -13,16 +13,25 @@
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> 
-  </head>
-  <body>
 
-    <form>
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <form action="" method="post">
       <div class="form-group">
-        <label for="input">Input</label>
-        <input type="text" class="form-control" id="input" placeholder="Something">
+        <label for="input-text">Input</label>
+        <input type="text" name="input-text" class="form-control" id="input-text" placeholder="Text">
+        <input type="text" name="input-label" class="form-control" id="input-label" placeholder="Label">
       </div>
       <button type="submit" class="btn btn-primary">Send</button>
     </form>
 
+    <form action="" method="post">
+      <div class="form-group">
+        <label for="output-text">Output</label>
+        <input type="text" name="output-text" class="form-control" id="output-text" placeholder="Text">
+      </div>
+    </form>
   </body>
 </html>
