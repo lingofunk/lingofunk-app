@@ -14,15 +14,15 @@
 
 ## Инструкция по развёртыванию
 
-1. Собрать docker-образ.
-На машине с Ubuntu это можно сделать с помощью команды:
+0. Зайти на [сайт](https://repo.continuum.io/miniconda/) с архивами версий Miniconda. Скачать Miniconda3-4.3.31-Linux-x86_64.sh (python 3.6.3)
+
+1. Собрать docker-образ. На Ubuntu — с помощью команды:
 
     `
     sudo docker build -t test_docker .
     `
 
-2. Запустить docker-образ.
-На машине с Ubuntu это можно сделать с помощью команды:
+2. Запустить docker-образ. На Ubuntu — с помощью команды:
 
     `
     sudo docker-compose up
