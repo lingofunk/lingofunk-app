@@ -1,7 +1,7 @@
 version: '2'
 
 services:
-  mongodb:
+  db:
     image: 'mongo:3.4.1'
     ports:
       - '27017:27017'
@@ -10,18 +10,11 @@ services:
 
   lingoapp:
     depends_on:
-      - 'mongodb'
+      - 'db'
     image: test_docker
-    # PRODUCTION:
     command: >
-           bash -c "rm -rf broker &
-                    celery worker --app=worker.celery_app --concurrency=1 --pool=solo --loglevel=INFO &
-                    python server.py &&
+           bash -c "python server.py &&
                     fg"
-    # TESTING
-    #command: >
-    #       bash -c "celery worker --app=worker.celery_app --concurrency=1 --pool=solo --loglevel=INFO &
-    #            py.test"
     ports:
       - '8001:8001'
     volumes:

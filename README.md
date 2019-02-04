@@ -30,12 +30,14 @@
 
 ## Разные (возможно, полезные) команды
   * Почистить результаты неудачной сборки:
+  
     `
     sudo docker rmi test_docker --force
     sudo docker rmi $(sudo docker images -f "dangling=true" -q)
     `
 
   * Посмотреть историю образа (есть и информация про размер по памяти):
+
     `
     sudo docker history test_docker
     `

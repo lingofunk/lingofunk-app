@@ -1,9 +1,16 @@
-From flask import Flask
-app = Flask(__name__)
+import os
+import argparse
+from flask import Flask, send_from_directory
+
+
+app = Flask(__name__, static_url_path='')
+
 
 @app.route('/')
 def hello_world():
-    return app.send_static_file('./index.html')
+    # return 'Hello World!'
+    return send_from_directory('.', 'index.html')
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
