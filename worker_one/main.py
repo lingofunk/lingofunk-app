@@ -13,7 +13,10 @@ def vectorize():
     # request should be json with data from web-ui
     logger.debug(request.get_json())
     data = request.get_json()
-    return jsonify(tokenized_text=data.get('text', 'Smth wrong').split(), attention_map=[0.9, 0.1])
+    return jsonify(
+        tokenized_text=data.get('text', 'Smth wrong').split(),
+        attention_map=[0.9, 0.1]
+    )
 
 
 if __name__ == "__main__":

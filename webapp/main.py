@@ -32,8 +32,11 @@ def worker_demo():
 # todo: make worker_one generic argument and redirect blindly
 @app.route('/api/worker_one/vectorize', methods=['POST'])
 def api_worker():
-    logger.debug('API proxy got {} resend to worker'.format(request.get_json()))
-    response = requests.post('http://worker_one:8000/vectorize', json=request.get_json())
+    msg = 'API proxy got {} resend to worker'.format(request.get_json())
+    logger.debug(msg)
+    response = requests.post(
+        'http://worker_one:8000/vectorize',
+        json=request.get_json())
     return Response(response.content, response.status_code)
 
 
