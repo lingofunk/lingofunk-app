@@ -59,7 +59,7 @@
 		<h2 align="center">Review Sentiment Meter</h2>
 		<div class="form-group">
 			<label for="Review">Review:</label>
-			<textarea class="form-control" id="review" name="comment" rows="5" placeholder="Enter your review.">Went in for a lunch. Steak sandwich was delicious, and the Caesar salad had an absolutely delicious dressing, with a perfect amount of dressing, and distributed perfectly across each leaf. I know I'm going on about the salad... </textarea>
+			<textarea class="form-control" id="review" name="review" rows="5" placeholder="Enter your review.">Went in for a lunch. Steak sandwich was delicious, and the Caesar salad had an absolutely delicious dressing, with a perfect amount of dressing, and distributed perfectly across each leaf. I know I'm going on about the salad... </textarea>
 			<br />
 		</div>
 		<button type="submit" class="btn btn-success" onclick="onClickSubmit()">
@@ -87,8 +87,9 @@
 						callback(data);
 					}
 				};
-				xhttp.open("GET", "api/classifier/activations?text=" + text, true);
-				xhttp.send();
+				xhttp.open("POST", "api/classifier/activations", true);
+				xhttp.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+        xhttp.send("text=" + text);
 			};
 
 			let onClickSubmit = function (event) {
