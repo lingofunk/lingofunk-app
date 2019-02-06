@@ -17,6 +17,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 app = Flask(__name__)
 
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -27,7 +28,7 @@ def classify_sentiment():
     return render_template("lingofunk-classify-sentiment.html")
 
 
-@app.route("/api/classifier/activations")
+@app.route("/api/classifier/activations", methods=["GET", "POST"])
 def activations_api():
     msg = f"Got {request.get_json()}, resent to the worker."
     logger.debug(msg)
