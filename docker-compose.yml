@@ -22,8 +22,6 @@ services:
   sentiment-classifier:
     build: ./lingofunk-classify-sentiment
     command: python -m lingofunk_classify_sentiment.app.run
-    ports:
-      - "8000:8000"
     volumes:
       - "./lingofunk-classify-sentiment:/app"
   # worker_one:
