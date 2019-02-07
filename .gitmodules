@@ -1,3 +1,6 @@
 [submodule "lingofunk-classify-sentiment"]
 	path = lingofunk-classify-sentiment
 	url = https://github.com/lingofunk/lingofunk-classify-sentiment
+[submodule "lingofunk-generate"]
+	path = lingofunk-generate
+	url = https://github.com/lingofunk/lingofunk-generate

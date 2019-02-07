@@ -38,6 +38,19 @@ def activations_api():
     return Response(response.content, response.status_code)
 
 
+# TODO: refactor (method: GET or POST, request: json or args or smth?)
+@app.route('/api/generator', methods=['GET', 'POST'])
+def api_worker():
+    msg = 'API proxy got {} resend to worker'.format(request.get_json())
+    logger.debug(msg)
+
+    response = requests.post(
+        'http://generator:8000/generate',  # generator:8000 0.0.0.0:8001
+        json={'style': request.args['style']})  # request.get_json()
+
+    return Response(response.content, response.status_code)
+
+
 # # todo: make all demos generic
 # @app.route('/worker_demo')
 # def worker_demo():
