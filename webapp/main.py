@@ -28,7 +28,7 @@ def classify_sentiment():
     return render_template("lingofunk-classify-sentiment.html")
 
 
-@app.route("/api/classifier/activations")
+@app.route("/api/classifier/activations", methods=["GET", "POST"])
 def activations_api():
     msg = f"Got {request.get_json()}, resent to the worker."
     logger.debug(msg)
