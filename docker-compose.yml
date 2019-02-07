@@ -16,16 +16,24 @@ services:
     volumes:
       - "./webapp:/app"
     links:
-      - "sentiment-classifier:sentiment-classifier"
-      # - 'worker_one:worker_one'
+#      - "sentiment-classifier:sentiment-classifier"
+      - "generator:generator"
+#      - "worker_template:worker_template"
 
-  sentiment-classifier:
-    build: ./lingofunk-classify-sentiment
-    command: python -m lingofunk_classify_sentiment.app.run
+#  sentiment-classifier:
+#    build: ./lingofunk-classify-sentiment
+#    command: python -m lingofunk_classify_sentiment.app.run
+#    volumes:
+#      - "./lingofunk-classify-sentiment:/app"
+
+  generator:
+    build: ./lingofunk-generate
+    command: python ./lingofunk_generate/server.py
     volumes:
-      - "./lingofunk-classify-sentiment:/app"
-  # worker_one:
-  #   build: ./worker_one
-  #   command: python main.py
-  #   volumes:
-  #     - ./worker_one:/app
+      - "./lingofunk-generate:/app"
+
+#  worker_template:
+#    build: ./worker_template
+#    command: python main.py
+#    volumes:
+#      - ./worker_template:/app

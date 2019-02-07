@@ -28,6 +28,11 @@ def classify_sentiment():
     return render_template("lingofunk-classify-sentiment.html")
 
 
+@app.route("/generate")
+def generate():
+    return render_template("lingofunk-generate.html")
+
+
 @app.route("/api/classifier/activations", methods=["GET", "POST"])
 def activations_api():
     msg = f"Got {request.get_json()}, resent to the worker."
@@ -35,6 +40,18 @@ def activations_api():
     response = requests.post(
         "http://sentiment-classifier:8000/activations", json=request.get_json()
     )
+    return Response(response.content, response.status_code)
+
+
+@app.route('/api/generator', methods=['POST'])
+def api_generator():
+    msg = 'API proxy got {} resend to worker'.format(request.get_json())
+    logger.debug(msg)
+
+    response = requests.post(
+        'http://generator:8000/generate',
+        json=request.get_json())
+
     return Response(response.content, response.status_code)
 
 
