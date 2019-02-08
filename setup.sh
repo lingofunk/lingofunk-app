@@ -4,7 +4,8 @@ function sync() {
     local -n files=$1
     for file in "${files[@]}"; do
         mkdir -p $(dirname $file)
-        [ -f ../$file ] && cp -n ../$file $file
+        [ -f $file ] && cp $file $file.old
+        [ -f ../$file ] && cp ../$file $file
     done
 }
 
