@@ -4,3 +4,6 @@
 [submodule "lingofunk-generate"]
 	path = lingofunk-generate
 	url = https://github.com/lingofunk/lingofunk-generate
+[submodule "lingofunk-transfer-style"]
+	path = lingofunk-transfer-style
+	url = https://github.com/lingofunk/lingofunk-transfer-style
