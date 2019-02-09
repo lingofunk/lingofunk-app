@@ -14,31 +14,31 @@
 	<script href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 	<style>
 		#btn-submit {
-		    margin-top: 2em;
-		    margin-bottom: 2em;
-		}
+        margin-top: 2em;
+        margin-bottom: 2em;
+    }
 
-		#output-text {
-		    display: none;
-		}
+    #output-text {
+        display: none;
+    }
 
-		.loader {
-			border: 0.2em solid #f3f3f3; /* Light grey */
-			border-top: 0.2em solid #3498db; /* Blue */
-			border-radius: 50%;
-			width: 2em;
-			height: 2em;
-			animation: spin 2s linear infinite;
-			display: inline-block;
-			margin-left: 1em;
-			margin-top: 2.2em;
-			position: absolute;
-		}
+    .loader {
+      border: 0.2em solid #f3f3f3; /* Light grey */
+      border-top: 0.2em solid #3498db; /* Blue */
+      border-radius: 50%;
+      width: 2em;
+      height: 2em;
+      animation: spin 2s linear infinite;
+      display: inline-block;
+      margin-left: 1em;
+      margin-top: 2.2em;
+      position: absolute;
+    }
 
-		@keyframes spin {
-			0% { transform: rotate(0deg); }
-			100% { transform: rotate(360deg); }
-		}
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
     </style>
 </header>
 
@@ -50,18 +50,18 @@
 			<div class="form-group">
 				<form action="{{ url_for('api_generator') }}" id="textform" method="post">
 					<div class="radio-inline">
-					  <input type="radio" class="style-option form-check-input" id="positive" value="positive" name="styles">
-					  <label class="form-check-label" for="positive">positive</label>
+						<input type="radio" class="style-option form-check-input" id="positive" value="positive" name="styles">
+						<label class="form-check-label" for="positive">positive</label>
 					</div>
 
 					<div class="radio-inline">
-					  <input type="radio" class="style-option form-check-input" id="negative" value="negative" name="styles">
-					  <label class="form-check-label" for="negative">negative</label>
+						<input type="radio" class="style-option form-check-input" id="negative" value="negative" name="styles">
+						<label class="form-check-label" for="negative">negative</label>
 					</div>
 
 					<div class="radio-inline">
-					  <input type="radio" class="style-option form-check-input" id="neutral" value="neutral" name="styles">
-					  <label class="form-check-label" for="neutral">neutral</label>
+						<input type="radio" class="style-option form-check-input" id="neutral" value="neutral" name="styles">
+						<label class="form-check-label" for="neutral">neutral</label>
 					</div>
 				</form>
 			</div>
@@ -89,36 +89,42 @@
 						// add here any additional value, such as range or options
 						style: $(".style-option:checked").val()
 					}),
-					success: function(result) {
-					    // place here any display functions
-					    console.log(result);
-					    let parsedResults = JSON.parse(result);
-					    <!--$('#output-text').append(document.createTextNode(parsedResults.tokenized_text));-->
-				        $('#output-text').val(parsedResults.text);
-				        $('#output-text').css('display', 'block');
-				    }
+					success: function (result) {
+						// place here any display functions
+						console.log(result);
+						let parsedResults = JSON.parse(result);
+						<!--$('#output-text').append(document.createTextNode(parsedResults.tokenized_text));-->
+						$('#output-text').val(parsedResults.text);
+						$('#output-text').css('display', 'block');
+					}
 				});
 			};
 
 
 			$("input:radio").change(
-			    () => { $("#btn-submit").prop("disabled", false); }
+				() => {
+					$("#btn-submit").prop("disabled", false);
+				}
 			);
 
-			const spinnerHide = () => { $('#loader').css('display', 'none'); }
-			const spinnerShow = () => { $('#loader').css('display', 'inline-block'); }
+			const spinnerHide = () => {
+				$('#loader').css('display', 'none');
+			}
+			const spinnerShow = () => {
+				$('#loader').css('display', 'inline-block');
+			}
 
 			spinnerHide();
 
 			$(document)
-			  .ajaxStart(function () {
-				spinnerShow()
-				$("#btn-submit").prop("disabled", true);
-			  })
-			  .ajaxStop(function () {
-				spinnerHide();
-				$("#btn-submit").prop("disabled", false);
-			  });
+				.ajaxStart(function () {
+					spinnerShow()
+					$("#btn-submit").prop("disabled", true);
+				})
+				.ajaxStop(function () {
+					spinnerHide();
+					$("#btn-submit").prop("disabled", false);
+				});
 
 		</script>
 	</footer>

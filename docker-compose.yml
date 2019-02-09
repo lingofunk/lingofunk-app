@@ -18,7 +18,22 @@ services:
     links:
       - "sentiment-classifier:sentiment-classifier"
       - "generator:generator"
-  #      - "worker_template:worker_template"
+      - "transferrer:transferrer"
+
+  transferrer:
+    build: ./lingofunk-transfer-style
+    command:
+      - /bin/sh
+      - -c
+      - |
+        python \
+        -m lingofunk_transfer_style.server \
+        --port=8000 \
+        --vocab=model/yelp.vocab \
+        --model=model/model \
+        --embedding=model/yelp.d100.emb.txt
+    volumes:
+      - "./lingofunk-transfer-style:/app"
 
   sentiment-classifier:
     build: ./lingofunk-classify-sentiment

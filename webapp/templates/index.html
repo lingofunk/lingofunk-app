@@ -1,49 +1,56 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Lingofunk</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-  </head>
+<head>
+	<title>Lingofunk</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <body>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
 
-    <div class="container">
-        <h1>
-            Demos
-        </h1>
+<body>
 
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!--<tr>-->
-                    <!--<td>0</td>-->
-                    <!--<td><a href="/worker_demo">Dummy</a></td>-->
-                    <!--<td>Just a test for webapp</td>-->
-                <!--</tr>-->
-                <tr>
-                    <td>1</td>
-                    <td><a href="/classify-sentiment">classify-sentiment</a></td>
-                    <td>Look at the sentiment distribution in given text</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td><a href="/generate">generate</a></td>
-                    <td>Generate text of given sentiment</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-  </body>
+	<div class="container">
+		<h1>
+			Demos
+		</h1>
+
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Name</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!--<tr>-->
+				<!--<td>0</td>-->
+				<!--<td><a href="/worker_demo">Dummy</a></td>-->
+				<!--<td>Just a test for webapp</td>-->
+				<!--</tr>-->
+				<tr>
+					<td>1</td>
+					<td><a href="/classify-sentiment">Classify sentiment</a></td>
+					<td>Check whether the review is positive or negative</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td><a href="/transfer-style">Transfer style</a></td>
+					<td>Generate a review of the same style, but a different sentiment</td>
+				</tr>
+				<tr>
+					<td>3</td>
+					<td><a href="/generate">Generate</a></td>
+					<td>Generate text of the given sentiment</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+
 </html>
