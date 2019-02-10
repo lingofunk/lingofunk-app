@@ -11,6 +11,7 @@ function sync() {
     echo "Copying directories..."
     local -n dirs=$2
     for dir in "${dirs[@]}"; do
+        [ -d $dir.old ] && rm -r $dir.old
         mv $dir $dir.old
         [ -d ../$dir ] && cp -r ../$dir $dir
     done
@@ -32,3 +33,7 @@ sync paths dirpaths
 # sync the submodules
 git submodule update --recursive --remote --init
 git pull
+
+# lingofunk-classify-sentiment
+
+./lingofunk-transfer-style/download_model.sh

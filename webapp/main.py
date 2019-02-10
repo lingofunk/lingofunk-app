@@ -38,9 +38,14 @@ def generate():
     return render_template("lingofunk-generate.html")
 
 
+@app.route("/transfer-style")
+def transfer():
+    return render_template("lingofunk-transfer.html")
+
+
 @app.route("/api/classifier/activations", methods=["GET", "POST"])
 def activations_api():
-    msg = f"Got {request.get_json()}, resent to the worker."
+    msg = f"Got {request.get_json()}, resent to the binary sentiment classifier"
     logger.debug(msg)
     response = requests.post(
         "http://sentiment-classifier:8000/activations", json=request.get_json()
@@ -53,20 +58,27 @@ def review_comparer_api():
     data = request.get_json()
     msg = f"Received two reviews: {data}"
     logger.debug(msg)
-    response = requests.post(
-        "http://review-comparer:8000/compare", json=data
-    )
+    response = requests.post("http://review-comparer:8000/compare", json=data)
     return Response(response.content, response.status_code)
 
 
-@app.route('/api/generator', methods=['POST'])
+@app.route("/api/generator", methods=["GET", "POST"])
 def api_generator():
-    msg = 'API proxy got {} resend to worker'.format(request.get_json())
+    msg = f"API proxy got {request.get_json()}, resent to the generator"
     logger.debug(msg)
 
-    response = requests.post(
-        'http://generator:8000/generate',
-        json=request.get_json())
+    response = requests.post("http://generator:8000/generate", json=request.get_json())
+
+    return Response(response.content, response.status_code)
+
+
+@app.route("/api/transferrer", methods=["GET", "POST"])
+def api_transferrer():
+    data = request.get_json()
+    msg = f"API proxy got {data}, resent to the transferrer"
+    logger.debug(msg)
+
+    response = requests.post("http://transferrer:8000/api/transfer", json=data)
 
     return Response(response.content, response.status_code)
 
