@@ -58,7 +58,7 @@ def review_comparer_api():
     data = request.get_json()
     msg = f"Received two reviews: {data}"
     logger.debug(msg)
-    response = requests.post("http://review-comparer:8000/compare", json=data)
+    response = requests.post("http://review-comparer:8000/api/review-comparer", json=data)
     return Response(response.content, response.status_code)
 
 

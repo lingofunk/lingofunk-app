@@ -16,10 +16,16 @@ services:
     volumes:
       - "./webapp:/app"
     links:
+      - "review-comparer:review-comparer"
       - "sentiment-classifier:sentiment-classifier"
       - "generator:generator"
       - "transferrer:transferrer"
-      - "review-comparer:review-comparer"
+
+  review-comparer:
+    build: ./lingofunk-classify-relevance
+    command: python ./lingofunk_classify_relevance/server.py
+    volumes:
+      - "./lingofunk-classify-relevance:/app"
 
   transferrer:
     build: ./lingofunk-transfer-style
@@ -36,11 +42,6 @@ services:
     volumes:
       - "./lingofunk-transfer-style:/app"
 
-  review-comparer:
-    build: ./lingofunk-classify-relevance
-    command: python ./lingofunk_classify_relevance/server.py
-    volumes:
-      - "./lingofunk-classify-relevance:/app"
 
   sentiment-classifier:
     build: ./lingofunk-classify-sentiment
