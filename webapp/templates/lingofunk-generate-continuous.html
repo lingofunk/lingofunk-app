@@ -31,7 +31,7 @@
       animation: spin 2s linear infinite;
       display: inline-block;
       margin-left: 1em;
-      margin-top: 2.2em;
+      margin-top: 2.3em;
       position: absolute;
     }
 
@@ -39,6 +39,36 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+
+    .slidecontainer {
+	  width: 100%;               /* Width of the outside container */
+	}
+
+	/* The slider itself */
+	.slider {
+	  -webkit-appearance: none;  /* Override default CSS styles */
+	  appearance: none;
+	  width: 100%;               /* Full-width */
+	  height: 25px;              /* Specified height */
+	  background: #d3d3d3;       /* Grey background */
+	  outline: none;             /* Remove outline */
+	  opacity: 0.7;              /* Set transparency (for mouse-over effects on hover) */
+	  -webkit-transition: .2s;   /* 0.2 seconds transition on hover */
+	  transition: opacity .2s;
+	}
+
+	/* Mouse-over effects */
+	.slider:hover:enabled {
+	  opacity: 1;                 /* Fully shown on mouse-over */
+	}
+
+	.cursor-pointer {
+	  cursor: pointer;
+	}
+
+	.cursor-default {
+	  cursor: default;
+	}
     </style>
 </header>
 
@@ -47,27 +77,13 @@
 		<h2 align="center">Text Generator</h2>
 		<fieldset>
 			<legend>Choose text style</legend>
-			<div class="form-group">
-				<form action="{{ url_for('api_generator') }}" id="textform" method="post">
-					<div class="radio-inline">
-						<input type="radio" class="style-option form-check-input" id="positive" value="positive" name="styles">
-						<label class="form-check-label" for="positive">positive</label>
-					</div>
-
-					<div class="radio-inline">
-						<input type="radio" class="style-option form-check-input" id="negative" value="negative" name="styles">
-						<label class="form-check-label" for="negative">negative</label>
-					</div>
-
-					<div class="radio-inline">
-						<input type="radio" class="style-option form-check-input" id="neutral" value="neutral" name="styles">
-						<label class="form-check-label" for="neutral">neutral</label>
-					</div>
-				</form>
+			<div class="slidecontainer">
+				<input type="range" min="-100" max="100" value="0" class="slider" id="style-slider">
+				<p>Chosen style: <span id="style-text-value"></span></p>
 			</div>
 		</fieldset>
 		<div>
-			<button type="submit" id="btn-submit" class="btn btn-success" onclick="onClickSubmit()" disabled>
+			<button type="submit" id="btn-submit" class="btn btn-success" onclick="onClickSubmit()">
 				Generate
 			</button>
 			<div class="loader" id="loader"></div>
@@ -78,8 +94,11 @@
 	</div>
 	<footer>
 		<script>
+			var slider = document.getElementById("style-slider");
+			var output = document.getElementById("style-text-value");
+
 			const onClickSubmit = function (event) {
-				const url = "api/generator"; // use your endpoint
+				const url = "/api/generator/continuous"; // use your endpoint
 				$.ajax({
 					url: url,
 					type: 'POST',
@@ -87,25 +106,44 @@
 					datatype: 'json',
 					data: JSON.stringify({
 						// add here any additional value, such as range or options
-						style: $(".style-option:checked").val()
+						'style-value': slider.value / 100.0
 					}),
 					success: function (result) {
 						// place here any display functions
 						console.log(result);
 						let parsedResults = JSON.parse(result);
-						<!--$('#output-text').append(document.createTextNode(parsedResults.tokenized_text));-->
 						$('#output-text').val(parsedResults.text);
 						$('#output-text').css('display', 'block');
 					}
 				});
 			};
 
-
-			$("input:radio").change(
-				() => {
-					$("#btn-submit").prop("disabled", false);
+			const transformStyleValueToStyleTextName = (styleValue) => {
+				const transformAbsoluteValueToName = (absValue, styleName) => {
+					if (styleValue == 100) {
+						return styleName;
+					} else if (styleValue > 80) {
+						return 'significantly ' + styleName;
+					} else if (styleValue > 50) {
+						return 'mostly ' + styleName;
+					} else if (styleValue > 20) {
+						return 'somewhat ' + styleName;
+					} else if (styleValue > 5) {
+						return 'so-so ' + styleName;
+					} else {
+						return 'neutral';
+					}
 				}
-			);
+
+				if (styleValue > 0) {
+					return transformAbsoluteValueToName(styleValue, 'positive');
+				} else if (styleValue < 0) {
+					styleValue = -1 * styleValue;
+					return transformAbsoluteValueToName(styleValue, 'negative');
+				} else {
+					return 'neutral';
+				}
+			}
 
 			const spinnerHide = () => {
 				$('#loader').css('display', 'none');
@@ -114,17 +152,29 @@
 				$('#loader').css('display', 'inline-block');
 			}
 
+			$("#style-slider").toggleClass("cursor-pointer");
 			spinnerHide();
 
 			$(document)
 				.ajaxStart(function () {
 					spinnerShow()
 					$("#btn-submit").prop("disabled", true);
+					$("#style-slider").prop("disabled", true);
+					$("#style-slider").toggleClass("cursor-default cursor-pointer");
 				})
 				.ajaxStop(function () {
 					spinnerHide();
 					$("#btn-submit").prop("disabled", false);
+					$("#style-slider").prop("disabled", false);
+					$("#style-slider").toggleClass("cursor-default cursor-pointer");
 				});
+
+			output.innerHTML = transformStyleValueToStyleTextName(slider.value); // Display the slider value
+
+			// Update the current slider value (each time you drag the slider handle)
+			slider.oninput = function () {
+				output.innerHTML = transformStyleValueToStyleTextName(this.value);
+			}
 
 		</script>
 	</footer>

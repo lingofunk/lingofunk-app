@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<header>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<title>Generate</title>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	 crossorigin="anonymous" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+	 crossorigin="anonymous" />
+	<script href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	<style>
+		#btn-submit {
+        margin-top: 2em;
+        margin-bottom: 2em;
+    }
+
+    #output-text {
+        display: none;
+    }
+
+    .loader {
+      border: 0.2em solid #f3f3f3; /* Light grey */
+      border-top: 0.2em solid #3498db; /* Blue */
+      border-radius: 50%;
+      width: 2em;
+      height: 2em;
+      animation: spin 2s linear infinite;
+      display: inline-block;
+      margin-left: 1em;
+      margin-top: 2.3em;
+      position: absolute;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    </style>
+</header>
+
+<body>
+	<div class="container">
+		<h2 align="center">Text Generator</h2>
+		<fieldset>
+			<legend>Choose text style</legend>
+			<div class="form-group">
+				<!--action="{{ url_for('api_generator_discrete') }}" -->
+				<form id="textform" method="post">
+					<div class="radio-inline">
+						<input type="radio" class="style-option form-check-input" id="positive" value="positive" name="styles">
+						<label class="form-check-label" for="positive">positive</label>
+					</div>
+
+					<div class="radio-inline">
+						<input type="radio" class="style-option form-check-input" id="negative" value="negative" name="styles">
+						<label class="form-check-label" for="negative">negative</label>
+					</div>
+
+					<div class="radio-inline">
+						<input type="radio" class="style-option form-check-input" id="neutral" value="neutral" name="styles">
+						<label class="form-check-label" for="neutral">neutral</label>
+					</div>
+				</form>
+			</div>
+		</fieldset>
+		<div>
+			<button type="submit" id="btn-submit" class="btn btn-success" onclick="onClickSubmit()" disabled>
+				Generate
+			</button>
+			<div class="loader" id="loader"></div>
+		</div>
+		<div id="output">
+			<textarea class="form-control" id="output-text" name="output-text" rows="5" placeholder=""></textarea>
+		</div>
+	</div>
+	<footer>
+		<script>
+			const onClickSubmit = function (event) {
+				const url = "/api/generator/discrete"; // use your endpoint
+				$.ajax({
+					url: url,
+					type: 'POST',
+					contentType: 'application/json',
+					datatype: 'json',
+					data: JSON.stringify({
+						// add here any additional value, such as range or options
+						'style-name': $(".style-option:checked").val()
+					}),
+					success: function (result) {
+						// place here any display functions
+						console.log(result);
+						let parsedResults = JSON.parse(result);
+						<!--$('#output-text').append(document.createTextNode(parsedResults.tokenized_text));-->
+						$('#output-text').val(parsedResults.text);
+						$('#output-text').css('display', 'block');
+					}
+				});
+			};
+
+
+			$("input:radio").change(
+				() => {
+					$("#btn-submit").prop("disabled", false);
+				}
+			);
+
+			const spinnerHide = () => {
+				$('#loader').css('display', 'none');
+			}
+			const spinnerShow = () => {
+				$('#loader').css('display', 'inline-block');
+			}
+
+			spinnerHide();
+
+			$(document)
+				.ajaxStart(function () {
+					spinnerShow()
+					$("#btn-submit").prop("disabled", true);
+					$("input:radio").prop("disabled", true);
+				})
+				.ajaxStop(function () {
+					spinnerHide();
+					$("#btn-submit").prop("disabled", false);
+					$("input:radio").prop("disabled", false);
+				});
+
+		</script>
+	</footer>
+</body>
+
+</html>

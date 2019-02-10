@@ -54,6 +54,7 @@ services:
     command: python ./lingofunk_generate/server.py
     volumes:
       - "./lingofunk-generate:/app"
+
 #  worker_template:
 #    build: ./worker_template
 #    command: python main.py
