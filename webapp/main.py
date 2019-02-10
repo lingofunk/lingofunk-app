@@ -1,6 +1,8 @@
 import argparse
 from flask import Flask, Response, render_template, request
 import requests
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
 import logging
 import sys
 
@@ -10,6 +12,30 @@ def _parse_args():
     parser.add_argument("--port", default=8000)
     parser.add_argument("--host", default="0.0.0.0")
     return parser.parse_args()
+
+
+# https://www.peterbe.com/plog/best-practice-with-retries-with-requests
+def requests_retry_session(retries=4,
+                           backoff_factor=1,
+                           status_forcelist=(500, 502, 504),
+                           session=None):
+    session = session or requests.Session()
+
+    retry = Retry(
+        total=retries,
+        read=retries,
+        connect=retries,
+        status=retries,
+        backoff_factor=backoff_factor,
+        status_forcelist=status_forcelist,
+    )
+
+    adapter = HTTPAdapter(max_retries=retry)
+
+    session.mount('http://', adapter)
+    session.mount('https://', adapter)
+
+    return session
 
 
 logging.basicConfig(stream=sys.stderr, level=logging.DEBUG)
@@ -28,9 +54,14 @@ def classify_sentiment():
     return render_template("lingofunk-classify-sentiment.html")
 
 
-@app.route("/generate")
-def generate():
-    return render_template("lingofunk-generate.html")
+@app.route("/generate/discrete")
+def generate_discrete():
+    return render_template("lingofunk-generate-discrete.html")
+
+
+@app.route("/generate/continuous")
+def generate_continuous():
+    return render_template("lingofunk-generate-continuous.html")
 
 
 @app.route("/transfer-style")
@@ -48,12 +79,22 @@ def activations_api():
     return Response(response.content, response.status_code)
 
 
-@app.route("/api/generator", methods=["GET", "POST"])
-def api_generator():
+@app.route("/api/generator/discrete", methods=["GET", "POST"])
+def api_generator_discrete():
     msg = f"API proxy got {request.get_json()}, resent to the generator"
     logger.debug(msg)
 
-    response = requests.post("http://generator:8000/generate", json=request.get_json())
+    response = requests_retry_session().post("http://generator:8000/generate/discrete", json=request.get_json())
+
+    return Response(response.content, response.status_code)
+
+# TODO: DRY
+@app.route("/api/generator/continuous", methods=["GET", "POST"])
+def api_generator_continuous():
+    msg = f"API proxy got {request.get_json()}, resent to the generator"
+    logger.debug(msg)
+
+    response = requests_retry_session().post("http://generator:8000/generate/continuous", json=request.get_json())
 
     return Response(response.content, response.status_code)
 
