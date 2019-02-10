@@ -7,3 +7,6 @@
 [submodule "lingofunk-classify-relevance"]
 	path = lingofunk-classify-relevance
 	url = https://github.com/lingofunk/lingofunk-classify-relevance
+[submodule "lingofunk-transfer-style"]
+	path = lingofunk-transfer-style
+	url = https://github.com/lingofunk/lingofunk-transfer-style
