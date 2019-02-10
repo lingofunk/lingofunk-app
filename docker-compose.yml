@@ -23,7 +23,7 @@ services:
 
   review-comparer:
     build: ./lingofunk-classify-relevance
-    command: python ./lingofunk_classify_relevance/server.py
+    command: python ./lingofunk_classify_relevance/server.py --port=8000
     volumes:
       - "./lingofunk-classify-relevance:/app"
 
