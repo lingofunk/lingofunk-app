@@ -109,6 +109,9 @@
 	</div>
 	<footer>
 		<script>
+		    var slider = document.getElementById("style-slider");
+			var output = document.getElementById("style-text-value");
+
 			const onClickSubmit = function (event) {
 				const url = "/api/generator/continuous"; // use your endpoint
 				$.ajax({
@@ -118,7 +121,7 @@
 					datatype: 'json',
 					data: JSON.stringify({
 						// add here any additional value, such as range or options
-						'style-value': $("#style-text-value").val() / 100.0
+						'style-value': slider.value / 100.0
 					}),
 					success: function (result) {
 						// place here any display functions
@@ -183,9 +186,6 @@
 					$("#style-slider").toggleClass("cursor-default cursor-pointer");
 				});
 
-
-			var slider = document.getElementById("style-slider");
-			var output = document.getElementById("style-text-value");
 			output.innerHTML = transformStyleValueToStyleTextName(slider.value); // Display the slider value
 
 			// Update the current slider value (each time you drag the slider handle)
