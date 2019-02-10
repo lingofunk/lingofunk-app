@@ -13,7 +13,7 @@
 	 crossorigin="anonymous" />
 	<script href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 	<style>
-	#btn-submit {
+		#btn-submit {
         margin-top: 2em;
         margin-bottom: 2em;
     }
@@ -69,21 +69,6 @@
 	.cursor-default {
 	  cursor: default;
 	}
-
-	/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
-	.slider::-webkit-slider-thumb {
-	  -webkit-appearance: none; /* Override default look */
-	  appearance: none;
-	  width: 25px;              /* Set a specific slider handle width */
-	  height: 25px;             /* Slider handle height */
-	  background: #4CAF50;      /* Green background */
-	}
-
-	.slider::-moz-range-thumb {
-	  width: 25px;              /* Set a specific slider handle width */
-	  height: 25px;             /* Slider handle height */
-	  background: #4CAF50;      /* Green background */
-	}
     </style>
 </header>
 
@@ -93,8 +78,8 @@
 		<fieldset>
 			<legend>Choose text style</legend>
 			<div class="slidecontainer">
-			  <input type="range" min="-100" max="100" value="0" class="slider" id="style-slider">
-			  <p>Chosen style: <span id="style-text-value"></span></p>
+				<input type="range" min="-100" max="100" value="0" class="slider" id="style-slider">
+				<p>Chosen style: <span id="style-text-value"></span></p>
 			</div>
 		</fieldset>
 		<div>
@@ -109,7 +94,7 @@
 	</div>
 	<footer>
 		<script>
-		    var slider = document.getElementById("style-slider");
+			var slider = document.getElementById("style-slider");
 			var output = document.getElementById("style-text-value");
 
 			const onClickSubmit = function (event) {
@@ -127,7 +112,6 @@
 						// place here any display functions
 						console.log(result);
 						let parsedResults = JSON.parse(result);
-						<!--$('#output-text').append(document.createTextNode(parsedResults.tokenized_text));-->
 						$('#output-text').val(parsedResults.text);
 						$('#output-text').css('display', 'block');
 					}
@@ -135,30 +119,30 @@
 			};
 
 			const transformStyleValueToStyleTextName = (styleValue) => {
-			    const transformAbsoluteValueToName = (absValue, styleName) => {
-			        if (styleValue == 100) {
-			            return styleName;
-			        } else if (styleValue > 80) {
-			            return 'significantly ' + styleName;
-			        } else if (styleValue > 50) {
-			            return 'mostly ' + styleName;
-			        } else if (styleValue > 20) {
-			            return 'somewhat ' + styleName;
-			        } else if (styleValue > 5) {
-			            return 'so-so ' + styleName;
-			        } else {
-			            return 'neutral';
-			        }
-			    }
+				const transformAbsoluteValueToName = (absValue, styleName) => {
+					if (styleValue == 100) {
+						return styleName;
+					} else if (styleValue > 80) {
+						return 'significantly ' + styleName;
+					} else if (styleValue > 50) {
+						return 'mostly ' + styleName;
+					} else if (styleValue > 20) {
+						return 'somewhat ' + styleName;
+					} else if (styleValue > 5) {
+						return 'so-so ' + styleName;
+					} else {
+						return 'neutral';
+					}
+				}
 
-			    if (styleValue > 0) {
-			        return transformAbsoluteValueToName(styleValue, 'positive');
-			    } else if (styleValue < 0) {
-			        styleValue = -1 * styleValue;
-			        return transformAbsoluteValueToName(styleValue, 'negative');
-			    } else {
-                    return 'neutral';
-			    }
+				if (styleValue > 0) {
+					return transformAbsoluteValueToName(styleValue, 'positive');
+				} else if (styleValue < 0) {
+					styleValue = -1 * styleValue;
+					return transformAbsoluteValueToName(styleValue, 'negative');
+				} else {
+					return 'neutral';
+				}
 			}
 
 			const spinnerHide = () => {
@@ -176,7 +160,6 @@
 					spinnerShow()
 					$("#btn-submit").prop("disabled", true);
 					$("#style-slider").prop("disabled", true);
-					$(".slider::-moz-range-thumb").css("cursor", "none");
 					$("#style-slider").toggleClass("cursor-default cursor-pointer");
 				})
 				.ajaxStop(function () {
@@ -189,8 +172,8 @@
 			output.innerHTML = transformStyleValueToStyleTextName(slider.value); // Display the slider value
 
 			// Update the current slider value (each time you drag the slider handle)
-			slider.oninput = function() {
-			  output.innerHTML = transformStyleValueToStyleTextName(this.value);
+			slider.oninput = function () {
+				output.innerHTML = transformStyleValueToStyleTextName(this.value);
 			}
 
 		</script>
