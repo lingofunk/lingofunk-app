@@ -19,6 +19,7 @@ services:
       - "sentiment-classifier:sentiment-classifier"
       - "generator:generator"
       - "transferrer:transferrer"
+      - "review-comparer:review-comparer"
 
   transferrer:
     build: ./lingofunk-transfer-style
