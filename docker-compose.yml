@@ -26,6 +26,12 @@ services:
     volumes:
       - "./lingofunk-classify-sentiment:/app"
 
+  review-comparer:
+    build: ./lingofunk-classify-relevance
+    command: python ./lingofunk_classify_relevance/server.py
+    volumes:
+      - "./lingofunk-generate:/app"
+
   generator:
     build: ./lingofunk-generate
     command: python ./lingofunk_generate/server.py
