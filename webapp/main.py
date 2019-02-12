@@ -3,6 +3,7 @@ from flask import Flask, Response, render_template, request
 import requests
 import logging
 import sys
+import json
 
 
 def _parse_args():
@@ -44,6 +45,20 @@ def activations_api():
     logger.debug(msg)
     response = requests.post(
         "http://sentiment-classifier:8000/activations", json=request.get_json()
+    )
+    return Response(response.content, response.status_code)
+
+
+@app.route("/api/describe", methods=["GET", "POST"])
+def api_describe():
+    msg = f"API proxy got {request.get_json()}, resent to the describer"
+    logger.debug(msg)
+
+    response = requests.post("http://generator:8000/activations", json=request.get_json())
+    received_data = json.loads(response.text)
+    avg_sentiment = received_data["avg_sentiment"]
+    response = requests.post(
+        "http://generator:8000/generate/continuous", json={"style-value": avg_sentiment}
     )
     return Response(response.content, response.status_code)
 
