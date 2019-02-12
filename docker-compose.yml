@@ -19,6 +19,7 @@ services:
       - "sentiment-classifier:sentiment-classifier"
       - "generator:generator"
       - "transferrer:transferrer"
+      - "regenerator:regenerator"
 
   transferrer:
     build: ./lingofunk-transfer-style
@@ -46,6 +47,12 @@ services:
     command: python ./lingofunk_generate/server.py
     volumes:
       - "./lingofunk-generate:/app"
+
+  regenerator:
+    build: ./lingofunk-regenerate
+    command: python ./lingofunk_regenerate/server.py
+    volumes:
+      - "./lingofunk-regenerate:/app"
 
 #  worker_template:
 #    build: ./worker_template
