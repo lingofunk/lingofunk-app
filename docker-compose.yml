@@ -50,7 +50,13 @@ services:
 
   generator:
     build: ./lingofunk-generate
-    command: python ./lingofunk_generate/server.py
+    command:
+      - /bin/sh
+      - -c
+      - |
+        PYTHONPATH=. python -m lingofunk_generate.server \
+        --temperature 0.5 \
+        --models 'models_char_1epochs_20000texts'
     volumes:
       - "./lingofunk-generate:/app"
 #  worker_template:
