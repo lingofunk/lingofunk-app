@@ -22,8 +22,8 @@ SENTIMENT_EMBEDDING=$SENTIMENT_DIR/embedding/glove.840B.300d.txt
 SENTIMENT_MODEL_DIR=$SENTIMENT_DIR/model/hnatt
 
 RELEVANCE_DIR=lingofunk-classify-relevance/lingofunk_classify_relevance/assets
-RELEVANCE_MODEL_DIR=$SENTIMENT_DIR/model/quora
-RELEVANCE_PREPROCESSOR=$SENTIMENT_DIR/model/utils/preprocessor.pkl
+RELEVANCE_MODEL_DIR=$RELEVANCE_DIR/model/quora
+RELEVANCE_PREPROCESSOR=$RELEVANCE_DIR/model/utils/preprocessor.pkl
 
 paths=(
     $SENTIMENT_EMBEDDING
