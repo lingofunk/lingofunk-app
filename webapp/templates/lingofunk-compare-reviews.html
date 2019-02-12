@@ -77,7 +77,7 @@
 			Submit
 		</button>
 
-		<div class="reviews-similarity" id="reviews-similarity">
+		<div id="output">
             <textarea class="form-control" id="similarity" name="similarity" rows="5" placeholder=""></textarea>
 		</div>
 	</div>
@@ -123,26 +123,35 @@
                         let parsedResults = JSON.parse(result);
 						$('#similarity').val(parsedResults.text);
 						$('#similarity').css('display', 'block');
+						return Number(parsedResults.text);
 				    }
-				});
 
+				});
 			};
 
             const transformStyleValueToStyleTextName = (styleValue) => {
 				const transformAbsoluteValueToName = (absValue, styleName) => {
 					if (styleValue > 0.66) {
-						return 'significantly ';
+						return 'significantly similar';
 					} else if (styleValue > 0.50) {
 						return 'mostly similar';
 					} else if (styleValue > 0.33) {
-						return 'partly ';
-					} else {
-						return 'not ';
+						return 'partly similar';
+					} else if (styleName > 0.00) {
+						return 'not similar';
 					}
 				};
 
-                return transformAbsoluteValueToName(styleValue, 'similar');
+                return transformAbsoluteValueToName(styleValue);
 			};
+
+
+   			output.innerHTML = transformStyleValueToStyleTextName(Number(onClickSubmit())); // Display the slider value
+
+            // Update the current slider value (each time you drag the slider handle)
+            slider.oninput = function () {
+                output.innerHTML = transformStyleValueToStyleTextName(this.value);
+            }
 
 		</script>
 	</footer>
