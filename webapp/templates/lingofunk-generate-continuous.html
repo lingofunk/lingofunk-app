@@ -149,7 +149,7 @@
 					} else {
 						return 'neutral';
 					}
-				}
+				};
 
 				if (styleValue > 0) {
 					return transformAbsoluteValueToName(styleValue, 'positive');
@@ -159,14 +159,14 @@
 				} else {
 					return 'neutral';
 				}
-			}
+			};
 
 			const spinnerHide = () => {
 				$('#loader').css('display', 'none');
-			}
+			};
 			const spinnerShow = () => {
 				$('#loader').css('display', 'inline-block');
-			}
+			};
 
 			$("#style-slider").toggleClass("cursor-pointer");
 			spinnerHide();
