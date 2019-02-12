@@ -54,7 +54,7 @@ def api_describe():
     msg = f"API proxy got {request.get_json()}, resent to the describer"
     logger.debug(msg)
 
-    response = requests.post("http://generator:8000/activations", json=request.get_json())
+    response = requests.post("http://generator:8000/histogram", json=request.get_json())
     received_data = json.loads(response.text)
     avg_sentiment = received_data["avg_sentiment"]
     response = requests.post(
