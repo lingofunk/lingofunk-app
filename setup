@@ -24,10 +24,12 @@ SENTIMENT_MODEL_DIR=$SENTIMENT_DIR/model/hnatt
 RELEVANCE_DIR=lingofunk-classify-relevance/lingofunk_classify_relevance/assets
 RELEVANCE_MODEL_DIR=$RELEVANCE_DIR/model/quora
 RELEVANCE_PREPROCESSOR=$RELEVANCE_DIR/model/utils/preprocessor.pkl
+RELEVANCE_MATRIX=$RELEVANCE_DIR/data/town_similarity_matrix.pkl
 
 paths=(
     $SENTIMENT_EMBEDDING
     $RELEVANCE_PREPROCESSOR
+    $RELEVANCE_MATRIX
 )
 
 dirpaths=(
@@ -43,4 +45,4 @@ git pull
 
 # lingofunk-classify-sentiment
 
-./lingofunk-transfer-style/download_model.sh
+# ./lingofunk-transfer-style/download_model.sh

@@ -23,7 +23,7 @@ services:
 
   review-comparer:
     build: ./lingofunk-classify-relevance
-    command: python ./lingofunk_classify_relevance/server.py --port=8000
+    command: python -m lingofunk_classify_relevance.app.server --port 8000
     volumes:
       - "./lingofunk-classify-relevance:/app"
 
@@ -34,14 +34,13 @@ services:
       - -c
       - |
         python \
-        -m lingofunk_transfer_style.server \
+        -m   lingofunk_transfer_style \
+        --mode=serve  \
         --port=8000 \
-        --vocab=model/yelp.vocab \
-        --model=model/model \
-        --embedding=model/yelp.d100.emb.txt
+        --load_models \
+        --no_cuda
     volumes:
       - "./lingofunk-transfer-style:/app"
-
 
   sentiment-classifier:
     build: ./lingofunk-classify-sentiment
@@ -54,7 +53,6 @@ services:
     command: python ./lingofunk_generate/server.py
     volumes:
       - "./lingofunk-generate:/app"
-
 #  worker_template:
 #    build: ./worker_template
 #    command: python main.py
