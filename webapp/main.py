@@ -15,10 +15,9 @@ def _parse_args():
 
 
 # https://www.peterbe.com/plog/best-practice-with-retries-with-requests
-def requests_retry_session(retries=4,
-                           backoff_factor=1,
-                           status_forcelist=(500, 502, 504),
-                           session=None):
+def requests_retry_session(
+    retries=4, backoff_factor=1, status_forcelist=(500, 502, 504), session=None
+):
     session = session or requests.Session()
 
     retry = Retry(
@@ -32,8 +31,8 @@ def requests_retry_session(retries=4,
 
     adapter = HTTPAdapter(max_retries=retry)
 
-    session.mount('http://', adapter)
-    session.mount('https://', adapter)
+    session.mount("http://", adapter)
+    session.mount("https://", adapter)
 
     return session
 
@@ -52,6 +51,11 @@ def index():
 @app.route("/classify-sentiment")
 def classify_sentiment():
     return render_template("lingofunk-classify-sentiment.html")
+
+
+@app.route("/compare-reviews")
+def classify_relevance():
+    return render_template("lingofunk-compare-reviews.html")
 
 
 @app.route("/generate/discrete")
@@ -79,14 +83,28 @@ def activations_api():
     return Response(response.content, response.status_code)
 
 
+@app.route("/api/review_comparer", methods=["GET", "POST"])
+def review_comparer_api():
+    data = request.get_json()
+    msg = f"Received two reviews: {data}"
+    logger.debug(msg)
+    response = requests.post(
+        "http://review-comparer:8000/api/review-comparer", json=data
+    )
+    return Response(response.content, response.status_code)
+
+
 @app.route("/api/generator/discrete", methods=["GET", "POST"])
 def api_generator_discrete():
     msg = f"API proxy got {request.get_json()}, resent to the generator"
     logger.debug(msg)
 
-    response = requests_retry_session().post("http://generator:8000/generate/discrete", json=request.get_json())
+    response = requests_retry_session().post(
+        "http://generator:8000/generate/discrete", json=request.get_json()
+    )
 
     return Response(response.content, response.status_code)
+
 
 # TODO: DRY
 @app.route("/api/generator/continuous", methods=["GET", "POST"])
@@ -94,7 +112,9 @@ def api_generator_continuous():
     msg = f"API proxy got {request.get_json()}, resent to the generator"
     logger.debug(msg)
 
-    response = requests_retry_session().post("http://generator:8000/generate/continuous", json=request.get_json())
+    response = requests_retry_session().post(
+        "http://generator:8000/generate/continuous", json=request.get_json()
+    )
 
     return Response(response.content, response.status_code)
 

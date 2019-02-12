@@ -17,15 +17,22 @@ function sync() {
     done
 }
 
-EMBEDDING=lingofunk-classify-sentiment/lingofunk_classify_sentiment/assets/embedding/glove.840B.300d.txt
-MODEL_DIR=lingofunk-classify-sentiment/lingofunk_classify_sentiment/assets/model/hnatt
+SENTIMENT_DIR=lingofunk-classify-sentiment/lingofunk_classify_sentiment/assets
+SENTIMENT_EMBEDDING=$SENTIMENT_DIR/embedding/glove.840B.300d.txt
+SENTIMENT_MODEL_DIR=$SENTIMENT_DIR/model/hnatt
+
+RELEVANCE_DIR=lingofunk-classify-relevance/lingofunk_classify_relevance/assets
+RELEVANCE_MODEL_DIR=$SENTIMENT_DIR/model/quora
+RELEVANCE_PREPROCESSOR=$SENTIMENT_DIR/model/utils/preprocessor.pkl
 
 paths=(
-    $EMBEDDING
+    $SENTIMENT_EMBEDDING
+    $RELEVANCE_PREPROCESSOR
 )
 
 dirpaths=(
-    $MODEL_DIR
+    $SENTIMENT_MODEL_DIR
+    $RELEVANCE_MODEL_DIR
 )
 
 sync paths dirpaths

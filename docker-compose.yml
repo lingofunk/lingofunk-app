@@ -16,9 +16,16 @@ services:
     volumes:
       - "./webapp:/app"
     links:
+      - "review-comparer:review-comparer"
       - "sentiment-classifier:sentiment-classifier"
       - "generator:generator"
       - "transferrer:transferrer"
+
+  review-comparer:
+    build: ./lingofunk-classify-relevance
+    command: python ./lingofunk_classify_relevance/server.py --port=8000
+    volumes:
+      - "./lingofunk-classify-relevance:/app"
 
   transferrer:
     build: ./lingofunk-transfer-style
@@ -34,6 +41,7 @@ services:
         --embedding=model/yelp.d100.emb.txt
     volumes:
       - "./lingofunk-transfer-style:/app"
+
 
   sentiment-classifier:
     build: ./lingofunk-classify-sentiment
