@@ -6,40 +6,47 @@
 
 	<title>Review Style Transfer</title>
 
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-	 crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-	 crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+		integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" />
 	<script href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 	<style>
 		#btn-submit {
-            margin-top: 2em;
-            margin-bottom: 2em;
-        }
+			margin-top: 2em;
+			margin-bottom: 2em;
+		}
 
-        #output-text {
-            display: none;
-        }
+		.output {
+			display: none;
+		}
 
-        .loader {
-            border: 0.2em solid #f3f3f3; /* Light grey */
-            border-top: 0.2em solid #3498db; /* Blue */
-            border-radius: 50%;
-            width: 2em;
-            height: 2em;
-            animation: spin 2s linear infinite;
-            display: inline-block;
-            margin-left: 1em;
-            margin-top: 2.2em;
-            position: absolute;
-        }
+		.loader {
+			border: 0.2em solid #f3f3f3;
+			/* Light grey */
+			border-top: 0.2em solid #3498db;
+			/* Blue */
+			border-radius: 50%;
+			width: 2em;
+			height: 2em;
+			animation: spin 2s linear infinite;
+			display: inline-block;
+			margin-left: 1em;
+			margin-top: 2.2em;
+			position: absolute;
+		}
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+		@keyframes spin {
+			0% {
+				transform: rotate(0deg);
+			}
+
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+	</style>
 </header>
 
 <body>
@@ -49,7 +56,8 @@
 			<div class="form-group">
 				<form action="{{ url_for('api_transferrer') }}" id="textform" method="post">
 					<label for="review">Review:</label>
-					<textarea class="form-control" id="review" name="review" rows="5" placeholder="Enter your review.">Went in for a lunch. Steak sandwich was delicious, and the Caesar salad had an absolutely delicious dressing, with a perfect amount of dressing, and distributed perfectly across each leaf. I know I'm going on about the salad... </textarea>
+					<textarea class="display-4 form-control" id="review" name="review" rows="5"
+						placeholder="Enter your review.">Went in for a lunch. Steak sandwich was delicious, and the Caesar salad had an absolutely delicious dressing, with a perfect amount of dressing, and distributed perfectly across each leaf. I know I'm going on about the salad... </textarea>
 				</form>
 			</div>
 		</fieldset>
@@ -59,14 +67,16 @@
 			</button>
 			<div class="loader" id="loader"></div>
 		</div>
-		<div id="output">
-			<textarea class="form-control" id="output-text" name="output-text" rows="5" placeholder=""></textarea>
+		<div class="container">
+			<div class="output alert alert-success" id="positive-output" name="positive-output-text"></div>
+			<div class="output alert alert-danger" id="negative-output" name="negative-output-text"></div>
 		</div>
+	</div>
 	</div>
 	<footer>
 		<script>
 			const renderTextInStyle = function (text) {
-				const url = "api/classifier/activations";
+				const url = "api/transferrer";
 				$.ajax({
 					url: url,
 					type: 'POST',
@@ -92,16 +102,14 @@
 					contentType: 'application/json',
 					datatype: 'json',
 					data: JSON.stringify({
-						// add here any additional value, such as range or options
-						is_positive: isPositive,
 						text: text
 					}),
 					success: function (result) {
-						// place here any display functions
 						console.log(result);
 						let parsedResults = JSON.parse(result);
-						$('#output-text').val(parsedResults.text);
-						$('#output-text').css('display', 'block');
+						$('#positive-output').text(parsedResults.positive)
+						$('#negative-output').text(parsedResults.negative)
+						$('.output').css('display', 'block');
 					}
 				});
 			}

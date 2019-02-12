@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title>Worker Demo</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-  </head>
+</head>
 
-  <body>
+<body>
     <div class="container">
         Short utterance classifier splitter
         <div class="form-group">
@@ -21,26 +22,27 @@
         <p id="result"></p>
     </div>
 
-  <script>
-      run = function () {
-          const url = "/api/worker_one/vectorize";  // use your endpoint
-          $.ajax({
-              url: url,
-              type: 'POST',
-              contentType: 'application/json',
-              datatype: 'json',
-              data: JSON.stringify({
-                  // add here any additional value, such as range or options
-                  text: $('#input-text').val()
-              }),
-              success: function(result) {
-                  // place here any display functions
-                  console.log(result);
-                  let parsedResults = JSON.parse(result);
-                  $('#result').append(document.createTextNode(parsedResults.tokenized_text));
-              }
-          });
-      }
-  </script>
-  </body>
+    <script>
+        run = function () {
+            const url = "/api/worker_one/vectorize";  // use your endpoint
+            $.ajax({
+                url: url,
+                type: 'POST',
+                contentType: 'application/json',
+                datatype: 'json',
+                data: JSON.stringify({
+                    // add here any additional value, such as range or options
+                    text: $('#input-text').val()
+                }),
+                success: function (result) {
+                    // place here any display functions
+                    console.log(result);
+                    let parsedResults = JSON.parse(result);
+                    $('#result').append(document.createTextNode(parsedResults.tokenized_text));
+                }
+            });
+        }
+    </script>
+</body>
+
 </html>

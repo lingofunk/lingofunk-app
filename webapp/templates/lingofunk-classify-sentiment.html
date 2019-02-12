@@ -4,54 +4,54 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Review Sentiment</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-	 crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-	 crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+		integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" />
 	<link rel="stylesheet" href="https://unpkg.com/normalize.css" />
 	<style>
 		.activation-map {
-        flex: 1 1;
-        padding: 8px;
-        padding-top: 32px;
-        max-width: 100%;
-        box-sizing: border-box;
-      }
+			flex: 1 1;
+			padding: 8px;
+			padding-top: 32px;
+			max-width: 100%;
+			box-sizing: border-box;
+		}
 
-      #sentence-list {
-        padding-left: 0;
-      }
+		#sentence-list {
+			padding-left: 0;
+		}
 
-      #sentence-list li {
-        display: flex;
-        align-items: center;
-      }
+		#sentence-list li {
+			display: flex;
+			align-items: center;
+		}
 
-      .sentence {
-        padding-left: 32px;
-      }
+		.sentence {
+			padding-left: 32px;
+		}
 
-      .sentence-label {
-        width: 32px;
-        height: 22px;
-        display: inline-block;
-      }
+		.sentence-label {
+			width: 32px;
+			height: 22px;
+			display: inline-block;
+		}
 
-      .words-container {
-        width: 100%;
-      }
+		.words-container {
+			width: 100%;
+		}
 
-      .word {
-        display: inline-block;
-        padding: 0 4px;
-      }
+		.word {
+			display: inline-block;
+			padding: 0 4px;
+		}
 
-      #prediction-container {
-        margin-top: 8px;
-        color: #555;
-      }
-    </style>
+		#prediction-container {
+			margin-top: 8px;
+			color: #555;
+		}
+	</style>
 </header>
 
 <body>
@@ -60,7 +60,8 @@
 		<div class="form-group">
 			<form action="{{ url_for('activations_api') }}" id="textform" method="post">
 				<label for="review">Review:</label>
-				<textarea class="form-control" id="review" name="review" rows="5" placeholder="Enter your review.">Went in for a lunch. Steak sandwich was delicious, and the Caesar salad had an absolutely delicious dressing, with a perfect amount of dressing, and distributed perfectly across each leaf. I know I'm going on about the salad... </textarea>
+				<textarea class="form-control" id="review" name="review" rows="5"
+					placeholder="Enter your review.">Went in for a lunch. Steak sandwich was delicious, and the Caesar salad had an absolutely delicious dressing, with a perfect amount of dressing, and distributed perfectly across each leaf. I know I'm going on about the salad... </textarea>
 			</form>
 			<br />
 		</div>

@@ -23,7 +23,7 @@ services:
 
   review-comparer:
     build: ./lingofunk-classify-relevance
-    command: python -m lingofunk_classify_relevance.app.server --port 8000
+    command: bash -c "PYTHONPATH=. python -m lingofunk_classify_relevance.app.server --port 8000"
     volumes:
       - "./lingofunk-classify-relevance:/app"
 
@@ -40,7 +40,7 @@ services:
         --load_models \
         --no_cuda
     volumes:
-      - "./lingofunk-transfer-style:/app"
+      - "../lingofunk-data:/app/output"
 
   sentiment-classifier:
     build: ./lingofunk-classify-sentiment

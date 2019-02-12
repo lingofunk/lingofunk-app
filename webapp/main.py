@@ -77,7 +77,7 @@ def transfer():
 def activations_api():
     msg = f"Got {request.get_json()}, resent to the binary sentiment classifier"
     logger.debug(msg)
-    response = requests.post(
+    response = requests_retry_session().post(
         "http://sentiment-classifier:8000/activations", json=request.get_json()
     )
     return Response(response.content, response.status_code)
@@ -88,9 +88,8 @@ def review_comparer_api():
     data = request.get_json()
     msg = f"Received two reviews: {data}"
     logger.debug(msg)
-    response = requests.post(
-        "http://review-comparer:8000/api/review-comparer", json=data
-    )
+    url = "http://review-comparer:8000/api/review_comparer"
+    response = requests_retry_session().post(url, json=data)
     return Response(response.content, response.status_code)
 
 
@@ -125,7 +124,9 @@ def api_transferrer():
     msg = f"API proxy got {data}, resent to the transferrer"
     logger.debug(msg)
 
-    response = requests.post("http://transferrer:8000/api/transfer", json=data)
+    response = requests_retry_session().post(
+        "http://transferrer:8000/api/transfer", data=data
+    )
 
     return Response(response.content, response.status_code)
 
