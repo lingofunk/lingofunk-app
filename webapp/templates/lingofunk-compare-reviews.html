@@ -76,8 +76,9 @@
 		<button type="submit" class="btn btn-success" onclick="onClickSubmit()">
 			Submit
 		</button>
+
 		<div class="reviews-similarity" id="reviews-similarity">
-			<p id="similarity"></p>
+            <textarea class="form-control" id="similarity" name="similarity" rows="5" placeholder=""></textarea>
 		</div>
 	</div>
 	<footer>
@@ -120,12 +121,28 @@
 					    // place here any display functions
 					    console.log(result);
                         let parsedResults = JSON.parse(result);
-                        $('#similarity').append(document.createTextNode(parsedResults.text));
+						$('#similarity').val(parsedResults.text);
+						$('#similarity').css('display', 'block');
 				    }
 				});
 
 			};
 
+            const transformStyleValueToStyleTextName = (styleValue) => {
+				const transformAbsoluteValueToName = (absValue, styleName) => {
+					if (styleValue > 0.66) {
+						return 'significantly ';
+					} else if (styleValue > 0.50) {
+						return 'mostly similar';
+					} else if (styleValue > 0.33) {
+						return 'partly ';
+					} else {
+						return 'not ';
+					}
+				};
+
+                return transformAbsoluteValueToName(styleValue, 'similar');
+			};
 
 		</script>
 	</footer>
