@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lingofunk</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.min.js"
+        integrity="sha384-7aThvCh9TypR7fIc2HV4O/nFMVCBwyIUKL8XCtKE+8xgCgl/PQGuFsvShjr74PBp"
+        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://bootswatch.com/4/cyborg/bootstrap.min.css" crossorigin="anonymous">
+    <script src="https://unpkg.com/@jaames/iro@beta/dist/iro.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/">Lingofunk</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/classify-sentiment">Sentiment Classifier</a></li>
+                    <li><a href="/compare-reviews">Relevance Classifier</a></li>
+                    <li><a href="/generate/discrete">Sentiment Class Generator</a></li>
+                    <li><a href="/generate/continuous">Sentiment Degree Generator</a></li>
+                    <li><a href="/regenerate">Sentiment Picker</a></li>
+                    <li><a href="/transfer-style">Style Imitator</a></li>
+                </ul>
+            </div>
+        </nav>
+        {% block content %}
+        {% endblock %}
+        <h1>
+            Demos
+        </h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td><a href="/classify-sentiment">Classify sentiment</a></td>
+                    <td>Check whether the review is positive or negative</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td><a href="/compare-reviews">Compare reviews by relevance</a></td>
+                    <td>Check how relevant a pair of reviews are to each other</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td><a href="/generate/discrete">Generate text of the given sentiment class</a></td>
+                    <td>Generate text of the given sentiment: positive, negative or neutral</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td><a href="/generate/continuous">Generate text of the given sentiment degree</a></td>
+                    <td>Generate text with given fraction of positive or negative sentiment</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td><a href="/regenerate">Regenerate</a></td>
+                    <td>Generate text of the given sentiment and intensity</td>
+                <tr>
+                    <td>6</td>
+                    <td><a href="/transfer-style">Transfer style</a></td>
+                    <td>Generate a review of the same style, but different sentiment</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
