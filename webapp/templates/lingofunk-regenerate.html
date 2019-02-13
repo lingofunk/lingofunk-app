@@ -73,27 +73,45 @@
 		</nav>
 
 
-		<h2 align="center">Text Regenerator</h2>
-		<fieldset>
-			<label for="text-input">Original Text</label>
-			<textarea class="form-control" id="text-input" name="text-input" rows="5"
-				placeholder="Type something here">Thai iced tea - perfect drink for the summer.  Strong black tea compliments the sweetened condensed milk.  The milk gives a nice richness to the tea.  I love how this isn't watered down.  It is very sweet but it's not a bad thing here.  4/5</textarea>
+		<div class="row" style="margin-bottom: 2em;">
+			<h2 align="center">Text Regenerator</h2>
+			<fieldset>
+				<label for="text-input">Text original</label>
+				<textarea class="form-control" id="text-input" name="text-input" rows="5"
+					placeholder="Type something here">Thai iced tea - perfect drink for the summer.  Strong black tea compliments the sweetened condensed milk.  The milk gives a nice richness to the tea.  I love how this isn't watered down.  It is very sweet but it's not a bad thing here.  4/5</textarea>
 
-			</br>
-			<label for="text-output">Adapted Text</label>
-			<textarea class="form-control" id="text-output" name="text-output" rows="5"
-				placeholder="Here will be the regenerated text"></textarea>
-		</fieldset>
-		<div class="" id="text-output" name="output"></div>
-		<br />
-		<div class="d-flex flex-row align-items-center align-content-between justify-content-center">
-			<div class="colorPicker"></div>
-			<div>
-				<button type="submit" id="btn-submit" class="btn btn-success">
-					Generate
-				</button>
-				<div class="loader" id="loader"></div>
-			</div>
+				<label for="text-output">Text regenerated</label>
+				<textarea class="form-control" id="text-output" name="text-output" rows="5"
+					placeholder="Here will be the regenerated text"></textarea>
+			</fieldset>
+		</div>
+
+		 <div class="row align-items-center justify-content-center">
+		  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" align="right">
+			  <div class="colorPicker"></div>
+		  </div>
+		  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 align-self-center" align="left">
+			  <div style="margin-top: 30%; margin-bottom: 50%; margin-left:20%;">
+				  <div>
+					  <div>
+						  <p>
+							  Move the point to generate a sentence!
+						  </p>
+						  <p>
+							  The closer the point is to the center,
+							  the more similar the result <strike>will</strike>
+							  is supposed to be to the original sentence.
+						  </p>
+					  </div>
+					  <div>
+						  <button type="submit" id="btn-submit" class="btn btn-success">
+							  Regenerate
+						  </button>
+						  <div class="loader" id="loader"></div>
+					  </div>
+				  </div>
+			  </div>
+		  </div>
 		</div>
 
 		<div id="coords">
