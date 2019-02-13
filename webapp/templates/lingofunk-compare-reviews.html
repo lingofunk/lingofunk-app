@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<header>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Review Sentiment</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+		integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://unpkg.com/normalize.css" />
+	<style>
+		#similarity-score {
+			margin-top: 2em;
+			margin-bottom: 2em;
+		}
+	</style>
+</header>
+
+<body>
+	<div class="container">
+		<nav class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/">Lingofunk</a>
+				</div>
+				<ul class="nav navbar-nav">
+					<li><a href="/">Home</a></li>
+					<li><a href="/classify-sentiment">Sentiment Classifier</a></li>
+					<li class="active"><a href="/compare-reviews">Relevance Classifier</a></li>
+					<li><a href="/generate/discrete">Sentiment Class Generator</a></li>
+					<li><a href="/generate/continuous">Sentiment Degree Generator</a></li>
+					<li><a href="/regenerate">Sentiment Picker</a></li>
+					<li><a href="/transfer-style">Style Imitator</a></li>
+				</ul>
+			</div>
+		</nav>
+
+
+		<h2 align="center">Relevance Classifier</h2>
+		<div class="form-group">
+			<form action="{{ url_for('review_comparer_api') }}" id="textform" method="post">
+				<label for="review1">Review1:</label>
+				<textarea class="form-control rounded-0" id="review1" name="review1" rows="5" placeholder="Enter your review.">Thai iced tea - perfect drink for the summer.  Strong black tea compliments the sweetened condensed milk.  The milk gives a nice richness to the tea.  I love how this isn't watered down.  It is very sweet but it's not a bad thing here.  4/5
+					</textarea>
+			</form>
+			<br />
+		</div>
+
+		<div class="form-group">
+			<form action="{{ url_for('review_comparer_api') }}" id="textform" method="post">
+				<label for="review2">Review2:</label>
+				<textarea class="form-control rounded-0" id="review2" name="review2" rows="5"
+					placeholder="Enter your review.">The Gaeng Klaw Wan with chicken dish was a bit disappointing. They state that the dish comes in a mild/medium spice level. It was a bit bland for us. The presentation was cute as the curry was served in a coconut.</textarea>
+			</form>
+			<br />
+		</div>
+		<button type="submit" class="btn btn-success" onclick="onClickSubmit()">
+			Submit
+		</button>
+		<div class="similarity alert" id="similarity-score" name="similarity-score" role="alert"></div>
+
+	</div>
+	<footer>
+		<script>
+			const similarityDegree = (score) => {
+				if (score >= 0.66) {
+					return 'The reviews are very likely to relate to the same restaurant.';
+				} else if (score >= 0.50) {
+					return 'The reviews are likely to relate to the same restaurant.';
+				} else if (score >= 0.33) {
+					return 'The reviews are unlikely to relate to the same restaurant.';
+				} else if (score >= 0.00) {
+					return 'The reviews are very unlikely to relate to the same restaurant.';
+				}
+			}
+			const similarityDegreeClass = (score) => {
+				if (score >= 0.66) {
+					return 'alert-success';
+				} else if (score >= 0.50) {
+					return 'alert-info';
+				} else if (score >= 0.33) {
+					return 'alert-warning';
+				} else if (score >= 0.00) {
+					return 'alert-danger';
+				}
+			}
+			const onClickSubmit = function (event) {
+				const url = "api/review_comparer"; // use your endpoint
+				$.ajax({
+					url: url,
+					type: 'POST',
+					contentType: 'application/json',
+					datatype: 'json',
+					data: JSON.stringify({
+						// add here any additional value, such as range or options
+						review1: $('#review1').val(),
+						review2: $('#review2').val()
+					}),
+
+					success: function (result) {
+						// place here any display functions
+						console.log(result);
+						const parsedResults = JSON.parse(result);
+						const score = Number(parsedResults.score)
+						$('#similarity-score').text(similarityDegree(score));
+						$('#similarity-score').addClass(similarityDegreeClass(score))
+					}
+				});
+			};
+
+		</script>
+	</footer>
+</body>
+
+</html>

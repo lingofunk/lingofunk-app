@@ -16,10 +16,17 @@ services:
     volumes:
       - "./webapp:/app"
     links:
+      - "review-comparer:review-comparer"
       - "sentiment-classifier:sentiment-classifier"
       - "generator:generator"
       - "transferrer:transferrer"
       - "regenerator:regenerator"
+
+  review-comparer:
+    build: ./lingofunk-classify-relevance
+    command: bash -c "PYTHONPATH=. python -m lingofunk_classify_relevance.app.server --port 8000"
+    volumes:
+      - "./lingofunk-classify-relevance:/app"
 
   transferrer:
     build: ./lingofunk-transfer-style
@@ -28,13 +35,13 @@ services:
       - -c
       - |
         python \
-        -m lingofunk_transfer_style.server \
+        -m   lingofunk_transfer_style \
+        --mode=serve  \
         --port=8000 \
-        --vocab=model/yelp.vocab \
-        --model=model/model \
-        --embedding=model/yelp.d100.emb.txt
+        --load_models \
+        --no_cuda
     volumes:
-      - "./lingofunk-transfer-style:/app"
+      - "../lingofunk-data/lingofunk-transfer-style:/app/output"
 
   sentiment-classifier:
     build: ./lingofunk-classify-sentiment
@@ -44,15 +51,26 @@ services:
 
   generator:
     build: ./lingofunk-generate
-    command: python ./lingofunk_generate/server.py
+    command:
+      - /bin/sh
+      - -c
+      - |
+        PYTHONPATH=. python -m lingofunk_generate.server \
+        --temperature 0.5 \
+        --models 'models_char_1epochs_20000texts'
     volumes:
       - "./lingofunk-generate:/app"
 
   regenerator:
     build: ./lingofunk-regenerate
-    command: python ./lingofunk_regenerate/server.py
+    command:
+      - /bin/sh
+      - -c
+      - |
+        PYTHONPATH=. python -m lingofunk_regenerate.server
     volumes:
       - "./lingofunk-regenerate:/app"
+
 
 #  worker_template:
 #    build: ./worker_template
