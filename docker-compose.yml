@@ -40,7 +40,7 @@ services:
         --load_models \
         --no_cuda
     volumes:
-      - "../lingofunk-data:/app/output"
+      - "../lingofunk-data/lingofunk-transfer-style:/app/output"
 
   sentiment-classifier:
     build: ./lingofunk-classify-sentiment
