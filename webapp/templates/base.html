@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 	<title>{% block title %}{% endblock %}</title>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" />
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-		integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <style>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css"
+		integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA" crossorigin="anonymous">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.min.js"
+		integrity="sha384-7aThvCh9TypR7fIc2HV4O/nFMVCBwyIUKL8XCtKE+8xgCgl/PQGuFsvShjr74PBp"
+		crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://bootswatch.com/4/cosmo/bootstrap.min.css" crossorigin="anonymous">
+	<style>
 		#btn-submit {
 			margin-top: 2em;
 			margin-bottom: 2em;
@@ -44,7 +50,7 @@
 			}
 		}
 	</style>
-    {% block head %}{% endblock %}
+	{% block head %}{% endblock %}
 </head>
 
 {% set menu_items = [
@@ -60,25 +66,28 @@
 
 <body>
 	<div class="container">
-		<nav class="navbar navbar-inverse">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<a class="navbar-brand" href="/">Lingofunk</a>
-				</div>
-                <ul class="nav navbar-nav">
-                    {% for href, page_id, text in menu_items %}
-                        <li{% if page_id == current_page_id %} class="active"{% endif %}>
-                            <a href="{{ href|e }}">{{ text|e }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<a class="navbar-brand" href="/">Lingofunk</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03"
+				aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarColor03">
+				<ul class="nav navbar-nav">
+					{% for href, page_id, text in menu_items %}
+					<li class="nav-item" {% if page_id == current_page_id %} class="active" {% endif %}>
+						<a class="nav-link" href="{{ href|e }}">{{ text|e }}</a>
+					</li>
+					{% endfor %}
+				</ul>
 			</div>
 		</nav>
-        {% block body %}{% endblock %}
+		{% block body %}{% endblock %}
 	</div>
 
 	<footer>
-        {% block scripts %}{% endblock %}
+		{% block scripts %}{% endblock %}
 	</footer>
 </body>
 
