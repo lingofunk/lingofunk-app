@@ -78,6 +78,11 @@ def transfer():
     return render_template("lingofunk-transfer.html")
 
 
+@app.route("/interpolate")
+def interpolate():
+    return render_template("lingofunk-interpolate.html")
+
+
 @app.route("/api/classifier/activations", methods=["GET", "POST"])
 def activations_api():
     msg = f"Got {request.get_json()}, resent to the binary sentiment classifier"
@@ -141,6 +146,19 @@ def api_transferrer():
 
     response = requests_retry_session().post(
         "http://transferrer:8000/api/transfer", data=data
+    )
+
+    return Response(response.content, response.status_code)
+
+
+@app.route("/api/interpolator", methods=["GET", "POST"])
+def api_interpolator():
+    data = request.get_json()
+    msg = f"API proxy got {data}, resent to the interpolator"
+    logger.debug(msg)
+
+    response = requests_retry_session().post(
+        "http://transferrer:8000/api/interpolate", data=data
     )
 
     return Response(response.content, response.status_code)
