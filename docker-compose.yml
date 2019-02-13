@@ -57,7 +57,7 @@ services:
       - |
         PYTHONPATH=. python -m lingofunk_generate.server \
         --temperature 0.5 \
-        --models 'models_char_1epochs_20000texts'
+        --models 'models_best'
     volumes:
       - "./lingofunk-generate:/app"
 
@@ -68,7 +68,7 @@ services:
       - -c
       - |
         PYTHONPATH=. python -m lingofunk_regenerate.server \
-        --model 'vae_new'
+        --model 'vae'
     volumes:
       - "./lingofunk-regenerate:/app"
 
