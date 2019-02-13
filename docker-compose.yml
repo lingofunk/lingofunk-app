@@ -67,7 +67,8 @@ services:
       - /bin/sh
       - -c
       - |
-        PYTHONPATH=. python -m lingofunk_regenerate.server
+        PYTHONPATH=. python -m lingofunk_regenerate.server \
+        --model 'vae_new'
     volumes:
       - "./lingofunk-regenerate:/app"
 
