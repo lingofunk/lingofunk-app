@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<title>{% block title %}{% endblock %}</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+		integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <style>
+		#btn-submit {
+			margin-top: 2em;
+			margin-bottom: 2em;
+		}
+
+		.loader {
+			border: 0.2em solid #f3f3f3;
+			/* Light grey */
+			border-top: 0.2em solid #3498db;
+			/* Blue */
+			border-radius: 50%;
+			width: 2em;
+			height: 2em;
+			animation: spin 2s linear infinite;
+			display: inline-block;
+			margin-left: 1em;
+			margin-top: 2.2em;
+			position: absolute;
+		}
+
+		@keyframes spin {
+			0% {
+				transform: rotate(0deg);
+			}
+
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+	</style>
+    {% block head %}{% endblock %}
+</head>
+
+{% set menu_items = [
+    ('/', 'index', 'Home'),
+    ('/classify-sentiment', 'classify-sentiment', 'Sentiment Classifier'),
+    ('/compare-reviews', 'compare-reviews', 'Relevance Classifier'),
+    ('/generate/discrete', 'generate-discrete', 'Sentiment Class Generator'),
+    ('/generate/continuous', 'generate-continuous', 'Sentiment Degree Generator'),
+    ('/regenerate', 'regenerate', 'Sentiment Picker'),
+    ('/transfer-style', 'transfer', 'Style Imitator')
+] -%}
+
+<body>
+	<div class="container">
+		<nav class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/">Lingofunk</a>
+				</div>
+                <ul class="nav navbar-nav">
+                    {% for href, page_id, text in menu_items %}
+                        <li{% if page_id == current_page_id %} class="active"{% endif %}>
+                            <a href="{{ href|e }}">{{ text|e }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+			</div>
+		</nav>
+        {% block body %}{% endblock %}
+	</div>
+
+	<footer>
+        {% block scripts %}{% endblock %}
+	</footer>
+</body>
+
+</html>
