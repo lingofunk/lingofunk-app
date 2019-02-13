@@ -20,6 +20,7 @@ services:
       - "sentiment-classifier:sentiment-classifier"
       - "generator:generator"
       - "transferrer:transferrer"
+      - "regenerator:regenerator"
 
   review-comparer:
     build: ./lingofunk-classify-relevance
@@ -59,6 +60,18 @@ services:
         --models 'models_char_1epochs_20000texts'
     volumes:
       - "./lingofunk-generate:/app"
+
+  regenerator:
+    build: ./lingofunk-regenerate
+    command:
+      - /bin/sh
+      - -c
+      - |
+        PYTHONPATH=. python -m lingofunk_regenerate.server
+    volumes:
+      - "./lingofunk-regenerate:/app"
+
+
 #  worker_template:
 #    build: ./worker_template
 #    command: python main.py

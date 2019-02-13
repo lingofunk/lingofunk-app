@@ -10,3 +10,6 @@
 [submodule "lingofunk-transfer-style"]
 	path = lingofunk-transfer-style
 	url = https://github.com/lingofunk/lingofunk-transfer-style
+[submodule "lingofunk-regenerate"]
+	path = lingofunk-regenerate
+	url = https://github.com/lingofunk/lingofunk-regenerate

@@ -68,6 +68,11 @@ def generate_continuous():
     return render_template("lingofunk-generate-continuous.html")
 
 
+@app.route("/regenerate")
+def regenerate():
+    return render_template("lingofunk-regenerate.html")
+
+
 @app.route("/transfer-style")
 def transfer():
     return render_template("lingofunk-transfer.html")
@@ -93,7 +98,7 @@ def review_comparer_api():
     return Response(response.content, response.status_code)
 
 
-@app.route("/api/generator/discrete", methods=["GET", "POST"])
+@app.route("/api/generator/discrete", methods=["POST"])
 def api_generator_discrete():
     msg = f"API proxy got {request.get_json()}, resent to the generator"
     logger.debug(msg)
@@ -106,7 +111,7 @@ def api_generator_discrete():
 
 
 # TODO: DRY
-@app.route("/api/generator/continuous", methods=["GET", "POST"])
+@app.route("/api/generator/continuous", methods=["POST"])
 def api_generator_continuous():
     msg = f"API proxy got {request.get_json()}, resent to the generator"
     logger.debug(msg)
@@ -114,6 +119,16 @@ def api_generator_continuous():
     response = requests_retry_session().post(
         "http://generator:8000/generate/continuous", json=request.get_json()
     )
+
+    return Response(response.content, response.status_code)
+
+
+@app.route("/api/regenerator", methods=["POST"])
+def api_regenerator():
+    msg = f"API proxy got {request.get_json()}, resent to the generator"
+    logger.debug(msg)
+
+    response = requests_retry_session().post("http://regenerator:8000/regenerate", json=request.get_json())
 
     return Response(response.content, response.status_code)
 
