@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% set current_page_id = 'compare-reviews' %}
-{% block title %}Review Sentiment{% endblock %}
+{% block title %}Review Relevance{% endblock %}
 
 {% block head %}
 <style>
@@ -88,21 +88,21 @@
                 $('#similarity-score').addClass(similarityDegreeClass(score))
             }
         });
-      			$('#review1').change(
-				() => {
-					$('#similarity-score').removeClass(function (index, className) {
-						return (className.match(/alert-[a-z]+/g) || []).join(' ');
-					})
-				}
-			)
-			$('#review2').change(
-				() => {
-					$('#similarity-score').removeClass(function (index, className) {
-						return (className.match(/alert-[a-z]+/g) || []).join(' ');
-					})
-				}
-			)
-      
+        $('#review1').change(
+            () => {
+                $('#similarity-score').removeClass(function (index, className) {
+                    return (className.match(/alert-[a-z]+/g) || []).join(' ');
+                })
+            }
+        )
+        $('#review2').change(
+            () => {
+                $('#similarity-score').removeClass(function (index, className) {
+                    return (className.match(/alert-[a-z]+/g) || []).join(' ');
+                })
+            }
+        )
+
     };
 </script>
 {% endblock %}
