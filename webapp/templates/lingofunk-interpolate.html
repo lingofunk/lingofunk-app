@@ -18,23 +18,25 @@
 
 {% block body %}
 <h2 align="center">Text Interpolation</h2>
-<div class="row mt-3"><div class="col">
-    Enter two reviews with the same number of sentences and the model will try to interpolate between them.
-</div></div>
+<div class="row mt-3">
+    <div class="col">
+        Enter two reviews with the same number of sentences and the model will try to interpolate between them.
+    </div>
+</div>
 
 <div class="row mt-3">
-    <div class="col-sm-5">
+    <div class="col-sm-6">
         <div class="form-group">
             <label for="review1">First Review:</label>
             <textarea class="form-control rounded-0" id="review1" name="review1" rows="5"
-                      placeholder="Enter your review.">This place is generally alright. The food was just fine, nothing amazing though.</textarea>
+                placeholder="Enter your review.">This place is generally alright. The food was just fine, nothing amazing though.</textarea>
         </div>
     </div>
-    <div class="col-sm-5">
+    <div class="col-sm-6">
         <div class="form-group">
             <label for="review2">Second Review:</label>
             <textarea class="form-control rounded-0" id="review2" name="review2" rows="5"
-                      placeholder="Enter your review.">This is the best restaurant I've ever been to! The food is superb, props to the chef!</textarea>
+                placeholder="Enter your review.">This is the best restaurant I've ever been to! The food is superb, props to the chef!</textarea>
         </div>
     </div>
 </div>
@@ -44,7 +46,7 @@
 </button>
 
 <div class="alert alert-danger mt-3" role="alert" id="input_alert">
-  Please enter two texts with the same number of sentences!
+    Please enter two texts with the same number of sentences!
 </div>
 
 <div class="row">
@@ -61,7 +63,7 @@
 
 {% block scripts %}
 <script>
-    const fillWithResults = function(element, results) {
+    const fillWithResults = function (element, results) {
         let html = '';
         for (const i in results) {
             html += '<li>' + results[i] + '</li>'
