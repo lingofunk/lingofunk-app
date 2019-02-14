@@ -11,3 +11,9 @@ Flask = ">=1.0.2"
 
 [requires]
 python_version = "3.6"
+
+[scripts]
+
+server="""
+bash -c "PYTHONPATH=. FLASK_APP=main.py FLASK_DEBUG=1 python -m flask run"
+"""

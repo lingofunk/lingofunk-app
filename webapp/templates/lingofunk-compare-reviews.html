@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% set current_page_id = 'compare-reviews' %}
-{% block title %}Review Sentiment{% endblock %}
+{% block title %}Review Relevance{% endblock %}
 
 {% block head %}
 <style>
@@ -12,29 +12,28 @@
 {% endblock %}
 
 {% block body %}
-		<h2 align="center">Relevance Classifier</h2>
-		<div class="form-group">
-			<form action="{{ url_for('review_comparer_api') }}" id="textform" method="post">
-				<label for="review1">First Review:</label>
-				<textarea class="form-control rounded-0" id="review1" name="review1" rows="5"
-					placeholder="Enter your review.">Thai iced tea - perfect drink for the summer.  Strong black tea compliments the sweetened condensed milk.  The milk gives a nice richness to the tea.  I love how this isn't watered down.  It is very sweet but it's not a bad thing here.  4/5
+<h2 align="center">Relevance Classifier</h2>
+<div class="form-group">
+    <form action="{{ url_for('review_comparer_api') }}" id="textform" method="post">
+        <label for="review1">First Review:</label>
+        <textarea class="form-control rounded-0" id="review1" name="review1" rows="5" placeholder="Enter your review.">Thai iced tea - perfect drink for the summer.  Strong black tea compliments the sweetened condensed milk.  The milk gives a nice richness to the tea.  I love how this isn't watered down.  It is very sweet but it's not a bad thing here.  4/5
 					</textarea>
-			</form>
-			<br />
-		</div>
+    </form>
+    <br />
+</div>
 
-		<div class="form-group">
-			<form action="{{ url_for('review_comparer_api') }}" id="textform" method="post">
-				<label for="review2">Second Review:</label>
-				<textarea class="form-control rounded-0" id="review2" name="review2" rows="5"
-					placeholder="Enter your review.">The Gaeng Klaw Wan with chicken dish was a bit disappointing. They state that the dish comes in a mild/medium spice level. It was a bit bland for us. The presentation was cute as the curry was served in a coconut.</textarea>
-			</form>
-			<br />
-		</div>
-		<button type="submit" class="btn btn-success" onclick="onClickSubmit()">
-			Submit
-		</button>
-		<div class="similarity alert" id="similarity-score" name="similarity-score" role="alert"></div>
+<div class="form-group">
+    <form action="{{ url_for('review_comparer_api') }}" id="textform" method="post">
+        <label for="review2">Second Review:</label>
+        <textarea class="form-control rounded-0" id="review2" name="review2" rows="5"
+            placeholder="Enter your review.">The Gaeng Klaw Wan with chicken dish was a bit disappointing. They state that the dish comes in a mild/medium spice level. It was a bit bland for us. The presentation was cute as the curry was served in a coconut.</textarea>
+    </form>
+    <br />
+</div>
+<button type="submit" class="btn btn-success" onclick="onClickSubmit()">
+    Submit
+</button>
+<div class="similarity alert" id="similarity-score" name="similarity-score" role="alert"></div>
 
 {% endblock %}
 
@@ -85,21 +84,21 @@
                 $('#similarity-score').addClass(similarityDegreeClass(score))
             }
         });
-      			$('#review1').change(
-				() => {
-					$('#similarity-score').removeClass(function (index, className) {
-						return (className.match(/alert-[a-z]+/g) || []).join(' ');
-					})
-				}
-			)
-			$('#review2').change(
-				() => {
-					$('#similarity-score').removeClass(function (index, className) {
-						return (className.match(/alert-[a-z]+/g) || []).join(' ');
-					})
-				}
-			)
-      
+        $('#review1').change(
+            () => {
+                $('#similarity-score').removeClass(function (index, className) {
+                    return (className.match(/alert-[a-z]+/g) || []).join(' ');
+                })
+            }
+        )
+        $('#review2').change(
+            () => {
+                $('#similarity-score').removeClass(function (index, className) {
+                    return (className.match(/alert-[a-z]+/g) || []).join(' ');
+                })
+            }
+        )
+
     };
 </script>
 {% endblock %}
