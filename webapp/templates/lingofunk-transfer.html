@@ -2,35 +2,29 @@
 {% set current_page_id = 'transfer' %}
 {% block title %}Review Style Transfer{% endblock %}
 
-{% block head %}
-<style>
-    .output {
-        display: none;
-    }
-</style>
-{% endblock %}
-
 {% block body %}
 <h2 align="center">Review Style Transferrer</h2>
-<fieldset>
-    <div class="form-group">
-        <form action="{{ url_for('api_transferrer') }}" id="textform" method="post">
-            <label for="review">Review:</label>
-            <textarea class="display-4 form-control" id="review" name="review" rows="5"
-                placeholder="Enter your review.">Although the marinara sauce was a bit bland, but a touch of salt made it just right.</textarea>
-        </form>
-    </div>
-</fieldset>
-<div>
-    <button type="submit" id="btn-submit" class="btn btn-success" onclick="onClickSubmit()">
-        Transfer
-    </button>
-    <div class="loader" id="loader"></div>
-</div>
-<div class="container">
-    <div class="output alert alert-success" id="positive-output" name="positive-output-text"></div>
-    <div class="output alert alert-danger" id="negative-output" name="negative-output-text"></div>
-</div>
+<div class="row mt-3"><div class="col">
+    <fieldset>
+        <div class="form-group">
+            <form action="{{ url_for('api_transferrer') }}" id="textform" method="post">
+                <label for="review">Review:</label>
+                <textarea class="display-4 form-control" id="review" name="review" rows="5"
+                    placeholder="Enter your review.">Went for dinner with a friend of mine, really great place. All the staff were amazing!</textarea>
+            </form>
+        </div>
+    </fieldset>
+</div></div>
+<button type="submit" id="btn-submit" class="btn btn-success" onclick="onClickSubmit()">
+    Transfer
+</button>
+<div class="loader mt-1" id="loader"></div>
+<div class="row mt-3"><div class="col">
+    <div class="output alert alert-success mb-0" id="positive-output"></div>
+</div></div>
+<div class="row mt-3"><div class="col">
+    <div class="output alert alert-danger" id="negative-output"></div>
+</div></div>
 {% endblock %}
 
 {% block scripts %}

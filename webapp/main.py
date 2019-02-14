@@ -1,10 +1,11 @@
 import argparse
-from flask import Flask, Response, render_template, request
+import logging
+import sys
+
 import requests
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
-import logging
-import sys
+from flask import Flask, Response, render_template, request
 
 
 def _parse_args():
