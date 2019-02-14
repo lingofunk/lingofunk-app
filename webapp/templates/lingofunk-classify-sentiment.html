@@ -49,14 +49,15 @@
 
 {% block body %}
 <h2 align="center">Review Sentiment Meter</h2>
-<div class="form-group">
-	<form action="{{ url_for('activations_api') }}" id="textform" method="post">
-		<label for="review">Review:</label>
-		<textarea class="form-control" id="review" name="review" rows="5"
-			placeholder="Enter your review.">The atmosphere is so hip and relaxed. Prices and portions are fair. They really try to give you a nice little Thailand feel with the restaurant's neat decor. The coasters for drinks even have elephants on them. So cute. I always order the Chicken Pad Thai because it's my favourite! I absolutely love Thai food and tend to order a Pad Thai wherever I can, and I have to say Pai is one of the best places to get it in Toronto. Lots of flavour that just hits the spot!</textarea>
-	</form>
-	<br />
-</div>
+<div class="row mt-3"><div class="col">
+    <div class="form-group">
+        <form action="{{ url_for('activations_api') }}" id="textform" method="post">
+            <label for="review">Review:</label>
+            <textarea class="form-control" id="review" name="review" rows="5"
+                placeholder="Enter your review.">The atmosphere is so hip and relaxed. Prices and portions are fair. They really try to give you a nice little Thailand feel with the restaurant's neat decor. The coasters for drinks even have elephants on them. So cute. I always order the Chicken Pad Thai because it's my favourite! I absolutely love Thai food and tend to order a Pad Thai wherever I can, and I have to say Pai is one of the best places to get it in Toronto. Lots of flavour that just hits the spot!</textarea>
+        </form>
+    </div>
+</div></div>
 <button type="submit" class="btn btn-success" onclick="onClickSubmit()">
 	Submit
 </button>

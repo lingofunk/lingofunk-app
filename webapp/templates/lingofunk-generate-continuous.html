@@ -4,76 +4,82 @@
 
 {% block head %}
 <style>
-#output-text {
-    display: none;
-}
+    .slidecontainer {
+        width: 100%;
+        /* Width of the outside container */
+    }
 
-.slidecontainer {
-    width: 100%;
-    /* Width of the outside container */
-}
+    /* The slider itself */
+    .slider {
+        -webkit-appearance: none;
+        /* Override default CSS styles */
+        width: 100%;
+        /* Full-width */
+        height: 25px;
+        /* Specified height */
+        background: #f8f9fa;
+        /* Grey background */
+        outline: none;
+        /* Remove outline */
+        opacity: 1;
+        /* Set transparency (for mouse-over effects on hover) */
+        -webkit-transition: .2s;
+        /* 0.2 seconds transition on hover */
+        transition: opacity .2s;
+    }
 
-/* The slider itself */
-.slider {
-    -webkit-appearance: none;
-    /* Override default CSS styles */
-    width: 100%;
-    /* Full-width */
-    height: 25px;
-    /* Specified height */
-    background: #f8f9fa;
-    /* Grey background */
-    outline: none;
-    /* Remove outline */
-    opacity: 1;
-    /* Set transparency (for mouse-over effects on hover) */
-    -webkit-transition: .2s;
-    /* 0.2 seconds transition on hover */
-    transition: opacity .2s;
-}
+    /* Mouse-over effects */
+    .slider:hover:enabled {
+        opacity: 1;
+        /* Fully shown on mouse-over */
+    }
 
-/* Mouse-over effects */
-.slider:hover:enabled {
-    opacity: 1;
-    /* Fully shown on mouse-over */
-}
+    .cursor-pointer {
+        cursor: pointer;
+    }
 
-.cursor-pointer {
-    cursor: pointer;
-}
-
-.cursor-default {
-    cursor: default;
-}
+    .cursor-default {
+        cursor: default;
+    }
 </style>
 {% endblock %}
 
 {% block body %}
 <h2 align="center">Text Generator</h2>
-<fieldset>
-    <legend>Choose text style</legend>
-    <div class="slidecontainer">
-        <input type="range" min="-100" max="100" value="0" class="slider" id="style-slider">
-        <p>Chosen style: <span id="style-text-value"></span></p>
-    </div>
-</fieldset>
+<div class="row mt-3"><div class="col">
+    <fieldset>
+        <legend>Choose text style</legend>
+        <div class="slidecontainer">
+            <input type="range" min="-100" max="100" value="0" class="slider" id="style-slider">
+            <p>Chosen style: <span id="style-text-value"></span></p>
+        </div>
+    </fieldset>
+</div></div>
 <div>
     <button type="submit" id="btn-submit" class="btn btn-success" onclick="onClickSubmit()">
         Generate
     </button>
-    <div class="loader" id="loader"></div>
+    <div class="loader mt-1" id="loader"></div>
 </div>
-<div id="output">
-    <textarea class="form-control" id="output-text" name="output-text" rows="5" placeholder=""></textarea>
-</div>
+
+<div class="row mt-3"><div class="col">
+    <div class="output alert alert-success mb-0" id="positive-output"></div>
+    <div class="output alert alert-secondary mb-0" id="neutral-output"></div>
+    <div class="output alert alert-danger mb0" id="negative-output"></div>
+</div></div>
+
+{#<div id="output">#}
+{#    <textarea class="form-control" id="output-text" name="output-text" rows="5" placeholder=""></textarea>#}
+{#</div>#}
 {% endblock %}
 
 {% block scripts %}
 <script>
-    var slider = document.getElementById("style-slider");
-    var output = document.getElementById("style-text-value");
+    let slider = document.getElementById("style-slider");
+    let output = document.getElementById("style-text-value");
 
     const onClickSubmit = function (event) {
+	    $('.output').hide();
         const url = "/api/generator/continuous"; // use your endpoint
         $.ajax({
             url: url,
@@ -88,37 +94,43 @@
                 // place here any display functions
                 console.log(result);
                 let parsedResults = JSON.parse(result);
-                $('#output-text').val(parsedResults.text);
-                $('#output-text').css('display', 'block');
+                const styleClass = transformStyleValueToStyleClass(slider.value);
+				const element = $('#' + styleClass + '-output');
+                element.text(parsedResults.text);
+				element.show();
             }
         });
     };
 
-    const transformStyleValueToStyleTextName = (styleValue) => {
-        const transformAbsoluteValueToName = (absValue, styleName) => {
-            if (styleValue == 100) {
-                return styleName;
-            } else if (styleValue > 80) {
-                return 'significantly ' + styleName;
-            } else if (styleValue > 50) {
-                return 'mostly ' + styleName;
-            } else if (styleValue > 20) {
-                return 'somewhat ' + styleName;
-            } else if (styleValue > 5) {
-                return 'so-so ' + styleName;
+    const transformStyleValueToStyleClass = (styleValue) => {
+        if (styleValue > 0) {
+            return 'positive';
+        } else if (styleValue < 0) {
+            return 'negative';
+        } else {
+            return 'neutral';
+        }
+    };
+
+    const transformStyleValueToStyleDesription = (styleValue) => {
+        const transformAbsoluteValueToDescription = (absValue, styleClass) => {
+            if (absValue === 100) {
+                return styleClass;
+            } else if (absValue > 80) {
+                return 'significantly ' + styleClass;
+            } else if (absValue > 50) {
+                return 'mostly ' + styleClass;
+            } else if (absValue > 20) {
+                return 'somewhat ' + styleClass;
+            } else if (absValue > 5) {
+                return 'slightly ' + styleClass;
             } else {
                 return 'neutral';
             }
         };
 
-        if (styleValue > 0) {
-            return transformAbsoluteValueToName(styleValue, 'positive');
-        } else if (styleValue < 0) {
-            styleValue = -1 * styleValue;
-            return transformAbsoluteValueToName(styleValue, 'negative');
-        } else {
-            return 'neutral';
-        }
+        const styleClass = transformStyleValueToStyleClass(styleValue);
+        return transformAbsoluteValueToDescription(Math.abs(styleValue), styleClass);
     };
 
     const spinnerHide = () => {
@@ -145,11 +157,11 @@
             $("#style-slider").toggleClass("cursor-default cursor-pointer");
         });
 
-    output.innerHTML = transformStyleValueToStyleTextName(slider.value); // Display the slider value
+    output.innerHTML = transformStyleValueToStyleDesription(slider.value); // Display the slider value
 
     // Update the current slider value (each time you drag the slider handle)
     slider.oninput = function () {
-        output.innerHTML = transformStyleValueToStyleTextName(this.value);
+        output.innerHTML = transformStyleValueToStyleDesription(this.value);
     }
 
 </script>

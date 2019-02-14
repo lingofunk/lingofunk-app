@@ -4,50 +4,56 @@
 
 {% block head %}
 <style>
-	#output-text {
-		display: none;
-	}
+    .radio-inline input {
+        margin-top: 0.3rem;
+        margin-right: 0.1rem;
+    }
 </style>
 {% endblock %}
 
 {% block body %}
 <h2 align="center">Text Generator</h2>
-<fieldset>
-	<legend>Choose text style</legend>
-	<div class="form-group">
-		<form id="textform" method="post">
-			<div class="radio-inline">
-				<input type="radio" class="style-option form-check-input" id="positive" value="positive" name="styles">
-				<label class="form-check-label" for="positive">positive</label>
-			</div>
+<div class="row mt-3"><div class="col">
+    <fieldset>
+        <legend>Choose text style</legend>
+        <div class="form-group">
+            <form id="textform" method="post">
+                <div class="radio-inline">
+                    <input type="radio" class="style-option" id="positive" value="positive" name="styles">
+                    <label class="form-check-label" for="positive">positive</label>
+                </div>
 
-			<div class="radio-inline">
-				<input type="radio" class="style-option form-check-input" id="negative" value="negative" name="styles">
-				<label class="form-check-label" for="negative">negative</label>
-			</div>
+                <div class="radio-inline">
+                    <input type="radio" class="style-option" id="negative" value="negative" name="styles">
+                    <label class="form-check-label" for="negative">negative</label>
+                </div>
 
-			<div class="radio-inline">
-				<input type="radio" class="style-option form-check-input" id="neutral" value="neutral" name="styles">
-				<label class="form-check-label" for="neutral">neutral</label>
-			</div>
-		</form>
-	</div>
-</fieldset>
-<div>
-	<button type="submit" id="btn-submit" class="btn btn-success" onclick="onClickSubmit()" disabled>
-		Generate
-	</button>
-	<div class="loader" id="loader"></div>
-</div>
-<div id="output">
-	<textarea class="form-control" id="output-text" name="output-text" rows="5" placeholder=""></textarea>
-</div>
+                <div class="radio-inline">
+                    <input type="radio" class="style-option" id="neutral" value="neutral" name="styles">
+                    <label class="form-check-label" for="neutral">neutral</label>
+                </div>
+            </form>
+        </div>
+    </fieldset>
+</div></div>
+<button type="submit" id="btn-submit" class="btn btn-success" onclick="onClickSubmit()" disabled>
+    Generate
+</button>
+<div class="loader mt-1" id="loader"></div>
+
+<div class="row mt-3"><div class="col">
+    <div class="output alert alert-success mb-0" id="positive-output"></div>
+    <div class="output alert alert-secondary mb-0" id="neutral-output"></div>
+    <div class="output alert alert-danger mb0" id="negative-output"></div>
+</div></div>
 {% endblock %}
 
 {% block scripts %}
 <script>
 	const onClickSubmit = function (event) {
+	    $('.output').hide();
 		const url = "/api/generator/discrete"; // use your endpoint
+        const styleClass = $(".style-option:checked").val();
 		$.ajax({
 			url: url,
 			type: 'POST',
@@ -55,18 +61,18 @@
 			datatype: 'json',
 			data: JSON.stringify({
 				// add here any additional value, such as range or options
-				'style-name': $(".style-option:checked").val()
+				'style-name': styleClass
 			}),
 			success: function (result) {
 				// place here any display functions
 				console.log(result);
 				let parsedResults = JSON.parse(result);
-				$('#output-text').val(parsedResults.text);
-				$('#output-text').css('display', 'block');
+				const element = $('#' + styleClass + '-output');
+                element.text(parsedResults.text);
+				element.show();
 			}
 		});
 	};
-
 
 	$("input:radio").change(
 		() => {

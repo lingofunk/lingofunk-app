@@ -20,10 +20,9 @@
 		crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="https://bootswatch.com/4/cosmo/bootstrap.min.css" crossorigin="anonymous">
 	<style>
-		#btn-submit {
-			margin-top: 2em;
-			margin-bottom: 2em;
-		}
+        .output {
+            display: none;
+        }
 
 		.loader {
 			border: 0.2em solid #f3f3f3;
@@ -64,7 +63,7 @@
 ] -%}
 
 <body>
-	<div class="container">
+	<div class="container pb-3">
 		<a href="https://github.com/lingofunk" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80"
 				viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
 				aria-hidden="true">
@@ -110,13 +109,13 @@
 			}
 		</style>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<a class="navbar-brand" href="/">Lingofunk</a>
+			<a class="navbar-brand ml-1" href="/">Lingofunk</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03"
 				aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
 
-			<div class="collapse navbar-collapse" id="navbarColor03">
+			<div class="collapse navbar-collapse pl-1" id="navbarColor03">
 				<ul class="nav navbar-nav">
 					{% for href, page_id, text in menu_items %}
 					<li class="nav-item" {% if page_id == current_page_id %} class="active" {% endif %}>
@@ -126,12 +125,14 @@
 				</ul>
 			</div>
 		</nav>
-		{% block body %}{% endblock %}
+        <div class="row pt-4">
+            <div class="col">
+                {% block body %}{% endblock %}
+            </div>
+        </div>
 	</div>
 
-	<footer>
-		{% block scripts %}{% endblock %}
-	</footer>
+    {% block scripts %}{% endblock %}
 </body>
 
 </html>
