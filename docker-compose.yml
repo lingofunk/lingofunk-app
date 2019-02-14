@@ -70,8 +70,8 @@ services:
       - |
         PYTHONPATH=. python -m lingofunk_regenerate.server \
         --model 'vae_new' \
-        --models-folder './models' \
-        --data-folder './data' \
+        --models-folder 'models' \
+        --data-folder 'data_new' \
         --load-fields \
         --emb-dim 100 \
         --h-dim 128
