@@ -57,7 +57,8 @@ services:
       - |
         PYTHONPATH=. python -m lingofunk_generate.server \
         --temperature 0.5 \
-        --models 'models_best'
+        --models 'models_best' \
+        --max-gen-length 450
     volumes:
       - "./lingofunk-generate:/app"
 
@@ -68,7 +69,12 @@ services:
       - -c
       - |
         PYTHONPATH=. python -m lingofunk_regenerate.server \
-        --model 'vae'
+        --model 'vae_new' \
+        --models-folder './models' \
+        --data-folder './data' \
+        --load-fields \
+        --emb-dim 100 \
+        --h-dim 128
     volumes:
       - "./lingofunk-regenerate:/app"
 
